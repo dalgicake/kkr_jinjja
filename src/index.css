@@ -1,0 +1,28 @@
+@import 'tailwindcss';
+
+/* PLAN 13장 디자인 토큰 */
+@theme {
+  --color-paper: #f5efe0;
+  --color-ink: #000000;
+  --color-receipt: #ffffff;
+  --color-lime: #c6f542; /* 채움 전용, 위 글자는 검정 */
+  --color-pink: #ff6fa5; /* 채움 전용, 분홍 글자 금지 */
+  --color-muted: #6b6457;
+  --font-sans:
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    font-weight: 400;
+  }
+}
+
+/* 모든 가격: tabular-nums. Tailwind 유틸리티 `tabular-nums`와 같은 값 */
+.price {
+  font-variant-numeric: tabular-nums;
+}

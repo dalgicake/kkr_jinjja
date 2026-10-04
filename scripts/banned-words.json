@@ -1,0 +1,4 @@
+{
+  "$comment": "P4: words the app must never show. Matched case-insensitively. Used by tests/banned-words.test.ts (source) and scripts/check-words.mjs (dist/).",
+  "words": ["최저가", "lowest price", "cheapest"]
+}
