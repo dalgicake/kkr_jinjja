@@ -13,7 +13,7 @@
 
 ### 1순위 — 이것부터 해야 다른 것도 풀린다
 
-- [ ] **B0-0 GitHub push 권한** — `git push`가 403으로 거절됨. 저장소 `dalgicake/kkr_jinjja`의 주인은 `dalgicake` 계정인데, 이 맥에 로그인된 계정은 `dalgicake8`이라 쓰기 권한이 없다. 커밋은 로컬에 쌓아 두고 있다.
+- [해결] **B0-0 GitHub push 권한** (2026-10-04 협업자 추가 후 push 성공) — `git push`가 403으로 거절됨. 저장소 `dalgicake/kkr_jinjja`의 주인은 `dalgicake` 계정인데, 이 맥에 로그인된 계정은 `dalgicake8`이라 쓰기 권한이 없다. 커밋은 로컬에 쌓아 두고 있다.
   - 어떻게 하면 되는가 (A안 추천: 협업자 추가)
     1. 브라우저에서 **dalgicake** 계정으로 로그인 → https://github.com/dalgicake/kkr_jinjja
     2. 상단 탭 **Settings** → 왼쪽 메뉴 **Collaborators** (비밀번호·2FA를 다시 물으면 입력)
