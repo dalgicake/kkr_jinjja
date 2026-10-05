@@ -1,50 +1,54 @@
 import type { TargetSpec } from '../../../shared/types.js';
 import { formatWon } from '../../../shared/units.js';
-import { copy, fill } from '../../lib/i18n';
+import type { Copy } from '../../copy/ko';
+import { fill } from '../../lib/i18n';
 import type { ReadFailure } from '../capture/readTagClient';
+
+// Pure label helpers: callers pass `t` from useCopy() so they follow the current language.
 
 type SizeSpec = Pick<TargetSpec, 'perItemAmount' | 'perItemUnit' | 'itemCount'>;
 
-export function sizeLabel(s: SizeSpec): string {
-  if (s.perItemAmount === null) return fill(copy.confirm.sizeCountOnly, { count: s.itemCount });
-  return fill(copy.confirm.size, {
+export function sizeLabel(t: Copy, s: SizeSpec): string {
+  if (s.perItemAmount === null) return fill(t.confirm.sizeCountOnly, { count: s.itemCount });
+  return fill(t.confirm.size, {
     amount: s.perItemAmount,
-    unit: copy.confirm.units[s.perItemUnit],
+    unit: t.confirm.units[s.perItemUnit],
     count: s.itemCount,
   });
 }
 
-/** "다우니 섬유유연제 실내건조 2600ml 1개" — data joined with spaces, no copy needed. */
+/** "다우니 섬유유연제 실내건조 2600ml 1개" — product words stay as data (Korean), size follows t. */
 export function productLabel(
+  t: Copy,
   p: Pick<TargetSpec, 'brand' | 'productName' | 'variant'> & SizeSpec,
 ): string {
   const words = [p.brand, p.productName];
   if (p.variant && !p.productName.includes(p.variant)) words.push(p.variant);
-  return `${words.join(' ')} ${sizeLabel(p)}`;
+  return `${words.join(' ')} ${sizeLabel(t, p)}`;
 }
 
-export function priceLabel(won: number): string {
-  return fill(copy.confirm.price, { price: formatWon(won) });
+export function priceLabel(t: Copy, won: number): string {
+  return fill(t.confirm.price, { price: formatWon(won) });
 }
 
-export function failureMessage(reason: ReadFailure): string {
+export function failureMessage(t: Copy, reason: ReadFailure): string {
   switch (reason) {
     case 'unreadable':
-      return copy.error.unreadable;
+      return t.error.unreadable;
     case 'network':
-      return copy.error.network;
+      return t.error.network;
     case 'not_connected':
-      return copy.error.notConnected;
+      return t.error.notConnected;
     case 'auth':
-      return copy.error.auth;
+      return t.error.auth;
     case 'rate_limited':
-      return copy.error.rateLimited;
+      return t.error.rateLimited;
     case 'too_large':
-      return copy.error.tooLarge;
+      return t.error.tooLarge;
     case 'image':
-      return copy.error.image;
+      return t.error.image;
     case 'server':
-      return copy.error.server;
+      return t.error.server;
   }
 }
 

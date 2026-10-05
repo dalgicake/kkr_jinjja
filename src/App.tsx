@@ -1,9 +1,9 @@
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router';
 import { Footer } from './components/common/Footer';
-import { AboutPage } from './features/about/AboutPage';
-import { ConfirmPage } from './features/confirm/ConfirmPage';
 import { HomePage } from './features/home/HomePage';
 import { AuthProvider } from './lib/auth';
+import { LanguageProvider } from './lib/language';
+import { ROUTES } from './routes';
 
 function Layout() {
   return (
@@ -18,17 +18,20 @@ function Layout() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path="about" element={<AboutPage />} />
-            <Route path="confirm" element={<ConfirmPage />} />
-            <Route path="*" element={<HomePage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <LanguageProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route index element={<HomePage />} />
+              {ROUTES.map((r) => (
+                <Route key={r.path} path={r.path} element={r.element} />
+              ))}
+              <Route path="*" element={<HomePage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </LanguageProvider>
   );
 }

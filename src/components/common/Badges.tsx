@@ -1,25 +1,51 @@
 import type { ReactNode } from 'react';
 import { AlertIcon, CheckIcon } from './Icons';
+import { TONE_BG, type Tone } from './tone';
 
-/** Pink fill + black text + icon (PLAN 13: pink is a fill only, never text colour). */
-export function CheckBadge({ id, children }: { id?: string; children: ReactNode }) {
+/**
+ * Small static label: colour fill + black text + 2px black border, optional icon.
+ *   tone  fill (tone.ts meanings), default 'white'
+ *   icon  'check' | 'alert' | 'none' (default 'none')
+ *   id    for aria-describedby
+ * Not interactive — use Chip for tappable choices.
+ */
+export function Badge({
+  tone = 'white',
+  icon = 'none',
+  id,
+  children,
+}: {
+  tone?: Tone;
+  icon?: 'check' | 'alert' | 'none';
+  id?: string;
+  children: ReactNode;
+}) {
   return (
     <span
       id={id}
-      className="inline-flex items-center gap-1 rounded-sm bg-pink px-2 py-0.5 text-[13px] font-semibold text-ink"
+      className={`inline-flex items-center gap-1 rounded-md border-2 border-ink px-2 py-0.5 text-[13px] leading-snug font-bold ${TONE_BG[tone]}`}
     >
-      <AlertIcon className="size-3.5" />
+      {icon === 'check' && <CheckIcon className="size-3.5 shrink-0" />}
+      {icon === 'alert' && <AlertIcon className="size-3.5 shrink-0" />}
       {children}
     </span>
   );
 }
 
-/** "확인된 상품": black outline + check icon + text. */
+/** "Please check": pink fill + alert icon + words (pink is a fill only, never text colour). */
+export function CheckBadge({ id, children }: { id?: string; children: ReactNode }) {
+  return (
+    <Badge tone="pink" icon="alert" id={id}>
+      {children}
+    </Badge>
+  );
+}
+
+/** "Verified product": lime fill + check icon + words. */
 export function VerifiedBadge({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-sm border-2 border-ink bg-receipt px-2 py-0.5 text-[13px] font-semibold text-ink">
-      <CheckIcon className="size-3.5" />
+    <Badge tone="lime" icon="check">
       {children}
-    </span>
+    </Badge>
   );
 }

@@ -3,7 +3,8 @@ import { VerifiedBadge } from '../../components/common/Badges';
 import { Button } from '../../components/common/Button';
 import { storeDisplayName } from '../../components/common/StoreChips';
 import { formatWon } from '../../../shared/units.js';
-import { copy, fill } from '../../lib/i18n';
+import { fill } from '../../lib/i18n';
+import { useCopy } from '../../lib/language';
 import { scanStore, type ConfirmedScan } from '../capture/scanSession';
 import { productLabel } from './labels';
 
@@ -13,35 +14,35 @@ import { productLabel } from './labels';
  */
 export function ConfirmedPlaceholder({ confirmed }: { confirmed: ConfirmedScan }) {
   const navigate = useNavigate();
-  const store = storeDisplayName(confirmed.storeName);
+  const { t } = useCopy();
+  const store = storeDisplayName(t, confirmed.storeName);
   return (
     <section className="flex flex-col gap-4" aria-live="polite">
-      <h2 className="text-[22px] font-extrabold">{copy.next.title}</h2>
-      <div className="flex flex-col gap-1 text-[17px]">
+      <div className="flex flex-col items-start gap-1 rounded-lg border-2 border-ink bg-butter px-4 py-3 text-[17px]">
         {confirmed.verified && (
           <span>
-            <VerifiedBadge>{copy.confirm.verified}</VerifiedBadge>
+            <VerifiedBadge>{t.confirm.verified}</VerifiedBadge>
           </span>
         )}
-        <p className="font-semibold">{productLabel(confirmed.target)}</p>
+        <p className="font-semibold">{productLabel(t, confirmed.target)}</p>
         <p className="tabular-nums">
-          {fill(copy.next.priceLine, { price: formatWon(confirmed.storePrice) })}
+          {fill(t.next.priceLine, { price: formatWon(confirmed.storePrice) })}
         </p>
-        <p>{fill(copy.next.storeLine, { store: store ?? copy.next.noStore })}</p>
+        <p>{fill(t.next.storeLine, { store: store ?? t.next.noStore })}</p>
       </div>
-      <p className="text-[15px]">{copy.next.body}</p>
+      <p className="text-[15px]">{t.next.body}</p>
       <div className="flex flex-col gap-3">
-        <Button variant="secondary" onClick={() => scanStore.unconfirm()}>
-          {copy.next.edit}
+        <Button tone="white" onClick={() => scanStore.unconfirm()}>
+          {t.next.edit}
         </Button>
         <Button
-          variant="secondary"
+          tone="white"
           onClick={() => {
             scanStore.reset();
             void navigate('/');
           }}
         >
-          {copy.next.home}
+          {t.next.home}
         </Button>
       </div>
     </section>

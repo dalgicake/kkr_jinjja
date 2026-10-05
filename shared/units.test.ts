@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { UNIT_BASE, formatWon, normalizeAmount, totalAmount, unitPrice } from './units.js';
+import {
+  UNIT_BASE,
+  formatPrice,
+  formatWon,
+  normalizeAmount,
+  totalAmount,
+  unitPrice,
+} from './units.js';
 
 describe('UNIT_BASE', () => {
   it('uses ml·g = 100, m = 10, sheet = 100, ea = 1', () => {
@@ -58,5 +65,18 @@ describe('formatWon', () => {
     expect(formatWon(1234567)).toBe('1,234,567');
     expect(formatWon(0)).toBe('0');
     expect(formatWon(-1080)).toBe('-1,080');
+  });
+});
+
+describe('formatPrice', () => {
+  it('formats won per language', () => {
+    expect(formatPrice(9980, 'en')).toBe('₩9,980');
+    expect(formatPrice(9980, 'ko')).toBe('9,980원');
+    expect(formatPrice(0, 'en')).toBe('₩0');
+    expect(formatPrice(1234567, 'ko')).toBe('1,234,567원');
+  });
+  it('puts the minus sign first', () => {
+    expect(formatPrice(-1080, 'en')).toBe('-₩1,080');
+    expect(formatPrice(-1080, 'ko')).toBe('-1,080원');
   });
 });

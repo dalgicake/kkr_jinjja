@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { copy } from '../../lib/i18n';
-import { CheckIcon } from './Icons';
+import type { Copy } from '../../copy/ko';
+import { useCopy } from '../../lib/language';
+import { Chip } from './Chip';
 import {
   STORE_IDS,
   readStoreChoice,
@@ -20,17 +21,11 @@ export function useStoreChoice(): [StoreChoice | null, (c: StoreChoice | null) =
 }
 
 /** Display name for a stored storeName (id of a listed store, or a typed name). */
-export function storeDisplayName(storeName: string | null): string | null {
+export function storeDisplayName(t: Copy, storeName: string | null): string | null {
   if (!storeName) return null;
   return (STORE_IDS as readonly string[]).includes(storeName)
-    ? copy.store.names[storeName as StoreId]
+    ? t.store.names[storeName as StoreId]
     : storeName;
-}
-
-function chipClass(selected: boolean): string {
-  const base =
-    'inline-flex min-h-12 items-center gap-1 rounded-full border-2 border-ink px-4 text-[15px] font-semibold focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-ink';
-  return selected ? `${base} bg-ink text-receipt` : `${base} bg-transparent text-ink`;
 }
 
 export function StoreChips({
@@ -40,40 +35,40 @@ export function StoreChips({
   value: StoreChoice | null;
   onChange: (c: StoreChoice | null) => void;
 }) {
+  const { t } = useCopy();
   const isOther = value?.id === 'other';
+  // butter = store (PLAN 13 colour meanings)
   const chip = (id: StoreId | 'other', label: string) => {
     const selected = value?.id === id;
     return (
-      <button
+      <Chip
         key={id}
-        type="button"
-        aria-pressed={selected}
-        className={chipClass(selected)}
+        tone="butter"
+        selected={selected}
         onClick={() => onChange(selected ? null : id === 'other' ? { id, name: '' } : { id })}
       >
-        {selected && <CheckIcon />}
         {label}
-      </button>
+      </Chip>
     );
   };
   return (
     <fieldset className="flex flex-col gap-2">
-      <legend className="text-[17px] font-semibold">{copy.store.title}</legend>
-      <p className="text-[13px] text-muted">{copy.store.optional}</p>
+      <legend className="text-[17px] font-extrabold">{t.store.title}</legend>
+      <p className="text-[13px] text-muted">{t.store.optional}</p>
       <div className="flex flex-wrap gap-2">
-        {STORE_IDS.map((id) => chip(id, copy.store.names[id]))}
-        {chip('other', copy.store.names.other)}
+        {STORE_IDS.map((id) => chip(id, t.store.names[id]))}
+        {chip('other', t.store.names.other)}
       </div>
       {isOther && (
         <label className="flex flex-col gap-1">
-          <span className="text-[15px] font-semibold">{copy.store.otherLabel}</span>
+          <span className="text-[15px] font-semibold">{t.store.otherLabel}</span>
           <input
             type="text"
             maxLength={40}
             value={value.name}
-            placeholder={copy.store.otherPlaceholder}
+            placeholder={t.store.otherPlaceholder}
             onChange={(e) => onChange({ id: 'other', name: e.currentTarget.value })}
-            className="min-h-12 w-full rounded-md border border-muted bg-receipt px-3 text-[17px] text-ink placeholder:text-muted"
+            className="min-h-12 w-full rounded-md border-2 border-ink bg-receipt px-3 text-[17px] text-ink placeholder:text-muted"
           />
         </label>
       )}

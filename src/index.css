@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-/* PLAN 13장 디자인 토큰 */
+/* PLAN 13장 디자인 토큰 (Tailwind: bg-lime, bg-sky, bg-butter, bg-tangerine, bg-lilac, bg-pink …) */
 @theme {
   --color-paper: #f5efe0;
   --color-ink: #000000;
@@ -8,6 +8,13 @@
   --color-lime: #c6f542; /* 채움 전용, 위 글자는 검정 */
   --color-pink: #ff6fa5; /* 채움 전용, 분홍 글자 금지 */
   --color-muted: #6b6457;
+  /* 2026-10-05: more colour. Fills only, always black text on top. Fixed meanings:
+     lime = cheaper side / primary action, pink = needs check, sky = online / info,
+     butter = store, tangerine = promo, lilac = records */
+  --color-sky: #7cc8ff;
+  --color-butter: #ffe066;
+  --color-tangerine: #ff9f45;
+  --color-lilac: #b9a6ff;
   --font-sans:
     'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
@@ -25,4 +32,21 @@
 /* 모든 가격: tabular-nums. Tailwind 유틸리티 `tabular-nums`와 같은 값 */
 .price {
   font-variant-numeric: tabular-nums;
+}
+
+/* Sticker press: a hard 3px ink offset that collapses when pressed (buttons, toggle). */
+.sticker {
+  box-shadow: 0 3px 0 0 var(--color-ink);
+  transition:
+    transform 80ms ease-out,
+    box-shadow 80ms ease-out;
+}
+.sticker:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 0 var(--color-ink);
+}
+@media (prefers-reduced-motion: reduce) {
+  .sticker {
+    transition: none;
+  }
 }

@@ -1,0 +1,66 @@
+/* S3 comparison receipt (PLAN 13): one white paper card with zigzag tear edges, a faint paper
+   shadow (this card only) and a one-time "printing" drop of about 280ms. */
+
+/* Shadow lives on the wrapper: a mask would clip a box-shadow on the paper itself. */
+.receipt-wrap {
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.14));
+}
+
+.receipt-paper {
+  --tooth: 16px; /* width of one zigzag tooth; depth is half of it */
+  padding-block: calc(var(--tooth) / 2 + 12px);
+  -webkit-mask:
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / var(--tooth) 51%
+      repeat-x,
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / var(--tooth)
+      51% repeat-x;
+  mask:
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / var(--tooth) 51%
+      repeat-x,
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / var(--tooth)
+      51% repeat-x;
+}
+
+@keyframes receipt-print {
+  from {
+    transform: translateY(-14px);
+    clip-path: inset(-24px -24px 100% -24px);
+  }
+  to {
+    transform: none;
+    clip-path: inset(-24px -24px -24px -24px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .receipt-print {
+    animation: receipt-print 280ms ease-out 1 both;
+  }
+}
+
+/* Highlighter band behind the cheaper row: a slightly tilted lime stroke, black text on top. */
+.receipt-band {
+  position: absolute;
+  inset: 2px -8px;
+  border-radius: 3px;
+  transform: rotate(-0.6deg);
+  background: var(--color-lime);
+  z-index: 0;
+}
+
+/* Bottom action bar: sticks to the viewport bottom, rests above the footer at the end. */
+.result-actions {
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+@keyframes result-toast-in {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .result-toast {
+    animation: result-toast-in 160ms ease-out;
+  }
+}

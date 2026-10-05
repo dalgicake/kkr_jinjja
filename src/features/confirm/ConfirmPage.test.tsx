@@ -3,12 +3,18 @@ import { MemoryRouter } from 'react-router';
 import { afterEach, describe, expect, it } from 'vitest';
 import type { TagReading } from '../../../shared/tag.js';
 import { ko } from '../../copy/ko';
+import { LanguageProvider } from '../../lib/language';
 import { HomePage } from '../home/HomePage';
 import type { ReadTagOutcome } from '../capture/readTagClient';
 import { scanStore, type ScanDeps } from '../capture/scanSession';
 import { ConfirmPage } from './ConfirmPage';
 
-const render = (node: React.ReactNode) => renderToString(<MemoryRouter>{node}</MemoryRouter>);
+const render = (node: React.ReactNode) =>
+  renderToString(
+    <LanguageProvider initialLang="ko">
+      <MemoryRouter>{node}</MemoryRouter>
+    </LanguageProvider>,
+  );
 
 const base: TagReading = {
   image_kind: 'shelf_tag',

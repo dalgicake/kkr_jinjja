@@ -5,7 +5,8 @@ import { CheckBadge, VerifiedBadge } from '../../components/common/Badges';
 import { Button } from '../../components/common/Button';
 import { StoreChips, useStoreChoice } from '../../components/common/StoreChips';
 import { storeNameForApi } from '../../components/common/storeChoice';
-import { copy, fill } from '../../lib/i18n';
+import { fill } from '../../lib/i18n';
+import { useCopy } from '../../lib/language';
 import { supabase } from '../../lib/supabase';
 import { scanStore, type ScanSession } from '../capture/scanSession';
 import { ConfirmField, fieldIds, inputClass, type FieldStatus } from './ConfirmField';
@@ -60,6 +61,7 @@ const fieldId = (f: FieldName) => `confirm-${f}`;
 
 /** S2 "이 상품 맞아요?" */
 export function ConfirmCard({ session }: { session: ScanSession }) {
+  const { t } = useCopy();
   const reading = session.reading;
   const [state, setState] = useState(() => initialState(reading));
   const [suggestions, setSuggestions] = useState<CuratedProduct[]>([]);
@@ -114,7 +116,7 @@ export function ConfirmCard({ session }: { session: ScanSession }) {
   const errors = showErrors ? validateForm(form).errors : {};
   const order = fieldOrder(reading?.image_kind ?? null);
   const packageFirst = order[0] === 'storePrice';
-  const unread = reading ? copy.confirm.unread : undefined;
+  const unread = reading ? t.confirm.unread : undefined;
   const chips = (
     barcodeChip ? [barcodeChip, ...suggestions.filter((p) => p.id !== barcodeChip.id)] : suggestions
   ).slice(0, MAX_SUGGESTIONS);
@@ -186,7 +188,7 @@ export function ConfirmCard({ session }: { session: ScanSession }) {
   const priceField = (
     <ConfirmField
       id="confirm-storePrice"
-      label={copy.confirm.fields.storePrice}
+      label={t.confirm.fields.storePrice}
       status={status('storePrice')}
     >
       {text('storePrice', { inputMode: 'numeric', autoFocus: packageFirst, numeric: true })}
@@ -197,18 +199,16 @@ export function ConfirmCard({ session }: { session: ScanSession }) {
     <form noValidate onSubmit={onSubmit} className="flex flex-col gap-5">
       {verified && (
         <div className="flex flex-col gap-1">
-          <VerifiedBadge>{copy.confirm.verified}</VerifiedBadge>
-          <p className="text-[13px] text-muted">{copy.confirm.verifiedSub}</p>
+          <VerifiedBadge>{t.confirm.verified}</VerifiedBadge>
+          <p className="text-[13px] text-muted">{t.confirm.verifiedSub}</p>
         </div>
       )}
-      {packageFirst && <p className="text-[15px]">{copy.confirm.packagePhoto}</p>}
+      {packageFirst && <p className="text-[15px]">{t.confirm.packagePhoto}</p>}
       {reading?.multiple_tags_visible && (
-        <p className="text-[13px] text-muted">{copy.confirm.multipleTags}</p>
+        <p className="text-[13px] text-muted">{t.confirm.multipleTags}</p>
       )}
       {reading?.notes && (
-        <p className="text-[13px] text-muted">
-          {fill(copy.confirm.notes, { notes: reading.notes })}
-        </p>
+        <p className="text-[13px] text-muted">{fill(t.confirm.notes, { notes: reading.notes })}</p>
       )}
       {!verified && (
         <ProductSuggestions
@@ -225,19 +225,19 @@ export function ConfirmCard({ session }: { session: ScanSession }) {
 
       {packageFirst && priceField}
 
-      <ConfirmField id="confirm-brand" label={copy.confirm.fields.brand} status={status('brand')}>
+      <ConfirmField id="confirm-brand" label={t.confirm.fields.brand} status={status('brand')}>
         {text('brand')}
       </ConfirmField>
       <ConfirmField
         id="confirm-productName"
-        label={copy.confirm.fields.productName}
+        label={t.confirm.fields.productName}
         status={status('productName')}
       >
         {text('productName')}
       </ConfirmField>
       <ConfirmField
         id="confirm-variant"
-        label={copy.confirm.fields.variant}
+        label={t.confirm.fields.variant}
         optional
         status={status('variant')}
       >
@@ -247,16 +247,16 @@ export function ConfirmCard({ session }: { session: ScanSession }) {
       <div className="grid grid-cols-[1fr_8rem] items-start gap-3">
         <ConfirmField
           id="confirm-perItemAmount"
-          label={copy.confirm.fields.perItemAmount}
+          label={t.confirm.fields.perItemAmount}
           optional={form.perItemUnit === 'ea'}
           status={status('perItemAmount')}
-          hint={form.perItemUnit === 'ea' ? copy.confirm.eaAmountOptional : undefined}
+          hint={form.perItemUnit === 'ea' ? t.confirm.eaAmountOptional : undefined}
         >
           {text('perItemAmount', { inputMode: 'decimal', numeric: true })}
         </ConfirmField>
         <ConfirmField
           id="confirm-perItemUnit"
-          label={copy.confirm.fields.perItemUnit}
+          label={t.confirm.fields.perItemUnit}
           status={status('perItemUnit')}
         >
           <select
@@ -266,10 +266,10 @@ export function ConfirmCard({ session }: { session: ScanSession }) {
             }
             {...bind('perItemUnit')}
           >
-            <option value="">{unread ?? copy.confirm.unitPlaceholder}</option>
+            <option value="">{unread ?? t.confirm.unitPlaceholder}</option>
             {UNITS.map((u) => (
               <option key={u} value={u}>
-                {copy.confirm.units[u]}
+                {t.confirm.units[u]}
               </option>
             ))}
           </select>
@@ -277,15 +277,15 @@ export function ConfirmCard({ session }: { session: ScanSession }) {
       </div>
       {warning && (
         <p className="flex flex-col items-start gap-1 text-[15px]" role="status">
-          <CheckBadge>{copy.confirm.check}</CheckBadge>
+          <CheckBadge>{t.confirm.check}</CheckBadge>
           <span className="tabular-nums">
-            {fill(copy.confirm.unitPriceWarning, { pct: warning.diffPct })}
+            {fill(t.confirm.unitPriceWarning, { pct: warning.diffPct })}
           </span>
         </p>
       )}
       <ConfirmField
         id="confirm-itemCount"
-        label={copy.confirm.fields.itemCount}
+        label={t.confirm.fields.itemCount}
         status={status('itemCount')}
       >
         {text('itemCount', { inputMode: 'numeric', numeric: true })}
@@ -295,7 +295,7 @@ export function ConfirmCard({ session }: { session: ScanSession }) {
 
       <ConfirmField
         id="confirm-promoType"
-        label={copy.confirm.fields.promoType}
+        label={t.confirm.fields.promoType}
         optional
         status={status('promoType')}
       >
@@ -304,9 +304,9 @@ export function ConfirmCard({ session }: { session: ScanSession }) {
           onChange={(e) => setField('promoType', e.currentTarget.value as ConfirmForm['promoType'])}
           {...bind('promoType')}
         >
-          {PROMO_TYPES.map((t) => (
-            <option key={t} value={t}>
-              {copy.confirm.promoTypes[t]}
+          {PROMO_TYPES.map((p) => (
+            <option key={p} value={p}>
+              {t.confirm.promoTypes[p]}
             </option>
           ))}
         </select>
@@ -314,7 +314,7 @@ export function ConfirmCard({ session }: { session: ScanSession }) {
       {form.promoType !== 'none' && (
         <ConfirmField
           id="confirm-promoText"
-          label={copy.confirm.fields.promoText}
+          label={t.confirm.fields.promoText}
           optional
           status={status('promoText')}
         >
@@ -325,7 +325,7 @@ export function ConfirmCard({ session }: { session: ScanSession }) {
         <div className="grid grid-cols-2 gap-3">
           <ConfirmField
             id="confirm-promoN"
-            label={copy.confirm.fields.promoN}
+            label={t.confirm.fields.promoN}
             optional
             status={status('promoN')}
           >
@@ -333,7 +333,7 @@ export function ConfirmCard({ session }: { session: ScanSession }) {
           </ConfirmField>
           <ConfirmField
             id="confirm-promoM"
-            label={copy.confirm.fields.promoM}
+            label={t.confirm.fields.promoM}
             optional
             status={status('promoM')}
           >
@@ -344,8 +344,8 @@ export function ConfirmCard({ session }: { session: ScanSession }) {
 
       <StoreChips value={store} onChange={setStore} />
 
-      <Button type="submit" disabled={saving} className="mt-2">
-        {saving ? copy.confirm.saving : copy.confirm.cta}
+      <Button type="submit" size="lg" disabled={saving} className="mt-2">
+        {saving ? t.confirm.saving : t.confirm.cta}
       </Button>
     </form>
   );

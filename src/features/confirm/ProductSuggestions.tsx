@@ -1,4 +1,4 @@
-import { copy } from '../../lib/i18n';
+import { useCopy } from '../../lib/language';
 import type { CuratedProduct } from './confirmForm';
 import { productLabel } from './labels';
 
@@ -10,22 +10,23 @@ export function ProductSuggestions({
   products: readonly CuratedProduct[];
   onPick: (p: CuratedProduct) => void;
 }) {
+  const { t } = useCopy();
   if (products.length === 0) return null;
   return (
     <section className="flex flex-col gap-2" aria-labelledby="confirm-suggestions">
-      <h2 id="confirm-suggestions" className="text-[17px] font-semibold">
-        {copy.confirm.suggestions}
+      <h2 id="confirm-suggestions" className="text-[17px] font-extrabold">
+        {t.confirm.suggestions}
       </h2>
-      <p className="text-[13px] text-muted">{copy.confirm.suggestionsSub}</p>
+      <p className="text-[13px] text-muted">{t.confirm.suggestionsSub}</p>
       <ul className="flex flex-col gap-2">
         {products.map((p) => (
           <li key={p.id}>
             <button
               type="button"
               onClick={() => onPick(p)}
-              className="min-h-12 w-full rounded-lg border-2 border-ink bg-receipt px-4 py-2 text-left text-[15px] font-semibold tabular-nums"
+              className="min-h-12 w-full sticker rounded-lg border-2 border-ink bg-receipt px-4 py-2 text-left text-[15px] font-bold tabular-nums"
             >
-              {productLabel({
+              {productLabel(t, {
                 brand: p.brand,
                 productName: p.name,
                 variant: p.variant,

@@ -1,0 +1,42 @@
+/** ko copy, `screens` namespace (/screens tour). Spread into ko.ts; en mirror in screens.en.ts. */
+export const koScreens = {
+  title: '화면 둘러보기',
+  sub: '모든 화면을 한곳에 모았어요. 아직 조회가 연결되지 않아서 화면 속 숫자는 모두 예시예요.',
+  homeLink: '화면 둘러보기',
+  code: 'S{n}',
+  groups: {
+    app: '주요 화면',
+    results: '결과 유형',
+    resultsSub: '비교 영수증의 판정마다 예시 하나씩이에요.',
+    demo: '데모',
+    team: '팀 전용',
+    teamSub: '현장 테스트와 관리용이에요. 패스코드는 지금은 아무 값이나 통과해요.',
+  },
+  items: {
+    home: { name: '홈', desc: '가격표 찍기 버튼, 매장 칩, 최근 기록.' },
+    confirm: {
+      name: '확인 카드',
+      desc: '가격표에서 읽은 값을 확인해요. 찍거나 입력하기 전엔 비어 있어요.',
+    },
+    history: { name: '기록', desc: '온라인 구매 예정과 확인된 구매.' },
+    about: { name: '안내', desc: '일곱 가지 약속, 개인정보, 데이터 출처.' },
+    demo: { name: '데모 고르기', desc: '녹화된 예시 세 가지 중 하나를 골라요.' },
+    demoTag: { name: '데모 1단계: 가격표', desc: '찍은 가격표가 이렇게 보여요.' },
+    demoConfirm: { name: '데모 2단계: 확인 카드', desc: '읽은 값과 확인이 필요한 칸 하나.' },
+    demoResult: { name: '데모 3단계: 판정', desc: '판정과 비교 영수증으로 가는 링크.' },
+    test: { name: '현장 테스트', desc: '직접 찾기와 앱을 번갈아 쓰고 짧은 설문까지.' },
+    admin: { name: '관리자', desc: '상품 CSV, 네이버 후보 연결, 신고 목록.' },
+    stats: { name: '지표', desc: '기간별 촬영·매칭·구매 지표.' },
+  },
+  verdicts: {
+    storeCheaper: '마트가 싸면 그대로 말하고 온라인 링크는 강조하지 않아요.',
+    samePrice: '매장과 온라인의 단위가격이 같아요.',
+    onlineCheaper: '온라인이 확실히 싸요. 배송비는 미확인이에요.',
+    onlineCloseCall: '온라인이 조금 싸요. 배송비에 따라 뒤집힐 수 있어요.',
+    bundleOnline: '같은 수량은 없고, 더 큰 묶음이 단위가격으로 싸요.',
+    bundleStore: '온라인엔 다른 용량만 있고, 단위가격은 마트가 싸요.',
+    noMatch: '같은 상품을 찾지 못해서 판정하지 않아요.',
+    needPrice: '매장가가 없어요. 입력하면 비교해요.',
+    promo: '1+1 행사예요. 토글하면 2개 기준으로 다시 계산해요.',
+  },
+} as const;

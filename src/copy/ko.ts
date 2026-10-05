@@ -1,3 +1,7 @@
+import { koResult } from './parts/result.ko';
+import { koScreens } from './parts/screens.ko';
+import { koOps } from './parts/ops.ko';
+
 /** 모든 UI 문구(ko). 키를 추가하면 en.ts에도 같은 키를 넣는다 — 타입이 강제한다. */
 export const ko = {
   app: {
@@ -8,6 +12,46 @@ export const ko = {
     cta: '가격표 찍기',
     manualEntry: '직접 입력',
     aboutLink: '안내',
+    barcode: '바코드로 찾기',
+    demo: '데모로 체험',
+    moreTitle: '다른 방법',
+    recentTitle: '최근 기록',
+    historyLink: '기록 전체 보기',
+    recentEmpty: '아직 기록이 없어요. 산 것만 여기에 남아요.',
+    recentExample: '예시 기록 — 실제 구매가 아니에요',
+  },
+  history: {
+    title: '기록',
+    back: '홈으로',
+    exampleBadge: '예시 화면 — 실제 구매 기록이 아니에요',
+    exampleNote: '구매 기록 저장은 아직 만들고 있어요. 아래 줄은 화면 모양을 보여 주는 예시예요.',
+    plannedTitle: '구매 예정 (온라인)',
+    plannedSub: '샀어요를 눌러야 구매로 기록돼요. 누르기 전에는 구매가 아니에요.',
+    plannedTag: '구매 예정',
+    plannedOn: '{date}에 온라인으로 살게요를 눌렀어요',
+    plannedEmpty: '구매 예정인 상품이 없어요.',
+    confirmedTitle: '확인된 구매',
+    confirmedSub: '다음에 살 때가 가까운 순서예요.',
+    confirmedEmpty: '확인된 구매가 아직 없어요.',
+    boughtOn: '{date} {place}에서 샀어요',
+    boughtOnline: '{date} 온라인에서 샀어요',
+    boughtInStore: '{date} 매장에서 샀어요',
+    online: '온라인',
+    store: '매장',
+    nextDue: '다음엔 {date}쯤',
+    noNextDue: '다음 예정일 없음',
+    priceUnknown: '결제 금액 미입력',
+    date: '{month}월 {day}일',
+    bought: '샀어요',
+    actualPriceLabel: '실제 결제 금액 (선택)',
+    actualPriceHint: '모르면 비워 두세요. 금액은 미입력으로 남아요.',
+    invalidPrice: '숫자로만 입력해 주세요.',
+    save: '구매로 기록하기',
+    cancel: '닫기',
+    justBought: '구매로 기록했어요. 아래 확인된 구매에 들어갔어요.',
+    emptyTitle: '아직 기록이 없어요',
+    emptyBody:
+      '결과 화면에서 마트에서 살게요를 누르거나, 온라인 구매 예정을 샀어요로 바꾸면 여기에 남아요. 찍기만 한 상품은 기록되지 않아요.',
   },
   capture: {
     hint: '가격표가 화면을 꽉 채우게, 반사 없이 찍어 주세요.',
@@ -105,10 +149,122 @@ export const ko = {
   },
   commission: '이 앱은 지금 어떤 판매처에서도 수수료를 받지 않아요.',
   version: 'v{version}',
+  ui: {
+    language: '언어',
+    langEn: 'EN',
+    langKo: '한국어',
+    back: '뒤로',
+    home: '홈으로',
+    exampleLabel: '예시 화면 — 실제 조회 결과가 아니에요',
+  },
+  demo: {
+    banner: '데모 — 녹화된 예시예요',
+    title: '30초 데모',
+    intro: '가격표 한 장이 비교 영수증이 되기까지, 세 가지 예시로 보여 줘요.',
+    pickTitle: '시나리오 고르기',
+    pickSub: '하나를 고르면 바로 시작해요.',
+    switchTitle: '다른 시나리오',
+    scenarios: {
+      D1: {
+        short: '마트가 이겨요',
+        title: '마트가 이기는 판',
+        sub: '온라인에서 같은 상품을 찾았는데 마트가 더 싼 경우예요.',
+      },
+      D2: {
+        short: '배송비가 변수',
+        title: '온라인이 싸지만 배송비가 변수인 판',
+        sub: '차이가 작아서 배송비에 따라 뒤집힐 수 있는 경우예요.',
+      },
+      D3: {
+        short: '묶음 함정',
+        title: '묶음 함정',
+        sub: '같은 수량은 없고 큰 묶음만 있어서 단위가격으로만 비교하는 경우예요.',
+      },
+    },
+    stepsLabel: '진행 단계',
+    steps: {
+      tag: '가격표',
+      confirm: '확인 카드',
+      result: '비교 영수증',
+    },
+    stepOf: '{n}/3단계',
+    stepDone: '완료',
+    tagTitle: '마트에서 이 가격표를 찍었어요',
+    tagAlt: '{name} 가격표 그림. 매장가 {price}.',
+    tagUnitPrice: '{base}당 {price}',
+    tagNext: '찍은 가격표 읽기',
+    confirmTitle: '앱이 가격표를 이렇게 읽었어요',
+    confirmIntro:
+      '확신이 낮은 칸에는 분홍 테두리와 "확인해 주세요"가 붙어요. 사용자가 고친 뒤에 비교해요.',
+    readOnly: '데모에서는 칸을 고칠 수 없어요.',
+    resultTitle: '이 예시의 판정',
+    resultIntro: '다음 화면에서 이 예시의 비교 영수증을 열어요. 같은 예시 값으로 그린 화면이에요.',
+    resultOpen: '비교 영수증 열기',
+    verdicts: {
+      STORE_CHEAPER: '마트가 더 싸요',
+      ONLINE_CHEAPER: '온라인이 싸지만 차이가 작아요',
+      BUNDLE_ONLY: '같은 수량은 없고 큰 묶음만 있어요',
+    },
+    prev: '이전 단계',
+    other: '다른 시나리오 보기',
+    unitBases: {
+      ml: '100ml',
+      g: '100g',
+      m: '10m',
+      sheet: '100매',
+      ea: '1개',
+    },
+  },
   about: {
     title: '안내',
     back: '홈으로',
     connection: '연결 상태',
+    intro:
+      '진짜?는 마트 가격표를 찍으면 온라인의 같은 상품과 비교해, 무엇과 무엇을 어떤 조건으로 비교했는지 함께 보여 줘요.',
+    principleCode: 'P{n}',
+    principlesTitle: '이 앱이 지키는 일곱 가지 약속',
+    principles: {
+      p1: {
+        title: '모르는 값은 "미확인"이라고 써요',
+        body: '읽지 못했거나 조회되지 않은 값을 짐작해서 채우지 않아요. 배송비는 지금은 항상 미확인이에요.',
+      },
+      p2: {
+        title: '확실하지 않으면 추천하지 않아요',
+        body: '용량이나 수량이 같은지 확실하지 않은 상품은 비교에 쓰지 않고 "확인 필요" 칸에만 둬요.',
+      },
+      p3: {
+        title: '마트가 싸면 그대로 말해요',
+        body: '마트가 더 싸면 그렇게 말하고, 온라인 링크를 앞세우지 않아요.',
+      },
+      p4: {
+        title: '어디까지, 언제 찾아봤는지 밝혀요',
+        body: '"가장 싸다"고 단정하지 않아요. 대신 조회한 범위와 조회한 시각을 늘 문장으로 보여 줘요.',
+      },
+      p5: {
+        title: '구매는 직접 확인한 것만 기록해요',
+        body: '사진을 찍거나 링크를 누른 건 구매가 아니에요. "온라인으로 살게요"는 구매 예정이고, 나중에 [샀어요]를 눌러야 구매로 남아요.',
+      },
+      p6: {
+        title: '온라인 가격은 매번 새로 확인해요',
+        body: '화면의 온라인 가격은 방금(최대 10분 전) 조회한 값이고 조회 시각을 함께 보여 줘요. 온라인 가격 목록을 쌓아 두지 않아요.',
+      },
+      p7: {
+        title: '광고와 제휴 링크가 없어요',
+        body: '이 앱은 지금 어떤 판매처에서도 수수료를 받지 않아요.',
+      },
+    },
+    privacyTitle: '개인정보',
+    privacy: {
+      anonymous: '이름이나 연락처를 받지 않아요. 기기마다 만들어지는 익명 ID만 써요.',
+      photo: '가격표 사진은 읽은 뒤 저장하지 않아요.',
+      testMode: '예외: 현장 실험 모드에서 동의한 참가자의 가격표 사진만 비공개로 저장해요.',
+      purchases: '구매 기록은 사용자가 직접 확인한 것만 남아요.',
+    },
+    sourceTitle: '데이터 출처',
+    source: '온라인 가격은 네이버 쇼핑 검색 API로 조회해요. 쿠팡 가격은 아직 포함되지 않아요.',
+    contactTitle: '문의',
+    contactEmail: '문의 이메일은 곧 여기에 적어 둘게요.',
+    demoLink: '데모로 체험하기',
     latency: {
       title: '셔터→확인 카드 시간 (이 기기, 측정용)',
       median: '최근 {n}회 중앙값 {ms}ms',
@@ -116,6 +272,8 @@ export const ko = {
       none: '아직 기록이 없어요. 가격표를 찍으면 쌓여요.',
     },
   },
+  result: koResult,
+  screens: koScreens,
   auth: {
     loading: '연결하는 중이에요.',
     notConnected: '서버에 연결되지 않았어요.',
@@ -125,6 +283,7 @@ export const ko = {
     noUser: '서버가 익명 ID를 돌려주지 않았어요.',
     errorDetail: '오류 내용: {message}',
   },
+  ops: koOps,
 } as const;
 
 type Widen<T> = { [K in keyof T]: T[K] extends string ? string : Widen<T[K]> };

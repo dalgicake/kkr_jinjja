@@ -55,3 +55,11 @@ export function formatWon(won: number): string {
   const sign = won < 0 ? '-' : '';
   return sign + String(Math.abs(Math.round(won))).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
+
+/** 화면 표시용 금액: en "₩9,980", ko "9,980원". 음수는 부호를 맨 앞에. */
+export function formatPrice(won: number, lang: 'ko' | 'en'): string {
+  const n = Math.round(won);
+  const digits = formatWon(Math.abs(n));
+  const sign = n < 0 ? '-' : '';
+  return lang === 'en' ? `${sign}₩${digits}` : `${sign}${digits}원`;
+}

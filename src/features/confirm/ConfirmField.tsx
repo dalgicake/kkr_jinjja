@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { CheckBadge } from '../../components/common/Badges';
 import { AlertIcon } from '../../components/common/Icons';
-import { copy } from '../../lib/i18n';
+import { useCopy } from '../../lib/language';
 import type { FieldError } from './confirmForm';
 
 export interface FieldStatus {
@@ -27,7 +27,7 @@ export function inputClass(s: FieldStatus): string {
     ? 'border-2 border-ink'
     : s.check
       ? 'border-2 border-pink'
-      : 'border border-muted';
+      : 'border-2 border-ink';
   return `min-h-12 w-full rounded-md bg-receipt px-3 text-[17px] text-ink placeholder:text-muted ${border}`;
 }
 
@@ -46,20 +46,21 @@ export function ConfirmField({
   hint?: string;
   children: ReactNode;
 }) {
+  const { t } = useCopy();
   return (
     <div className="flex min-w-0 flex-col gap-1">
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-        <label htmlFor={id} className="text-[15px] font-semibold">
+        <label htmlFor={id} className="text-[15px] font-bold">
           {label}
         </label>
-        {optional && <span className="text-[13px] text-muted">{copy.confirm.optional}</span>}
-        {status.check && <CheckBadge id={`${id}-check`}>{copy.confirm.check}</CheckBadge>}
+        {optional && <span className="text-[13px] text-muted">{t.confirm.optional}</span>}
+        {status.check && <CheckBadge id={`${id}-check`}>{t.confirm.check}</CheckBadge>}
       </div>
       {children}
       {status.error && (
         <p id={`${id}-error`} className="flex items-center gap-1 text-[13px] font-semibold">
           <AlertIcon className="size-3.5 shrink-0" />
-          {status.error === 'required' ? copy.confirm.required : copy.confirm.invalidNumber}
+          {status.error === 'required' ? t.confirm.required : t.confirm.invalidNumber}
         </p>
       )}
       {hint && <p className="text-[13px] text-muted">{hint}</p>}

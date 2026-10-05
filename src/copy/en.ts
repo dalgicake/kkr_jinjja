@@ -1,4 +1,7 @@
 import type { Copy } from './ko';
+import { enResult } from './parts/result.en';
+import { enScreens } from './parts/screens.en';
+import { enOps } from './parts/ops.en';
 
 /** English mirror of ko.ts. The `Copy` type rejects missing or extra keys. */
 export const en: Copy = {
@@ -8,17 +11,58 @@ export const en: Copy = {
   },
   home: {
     cta: 'Scan a price tag',
-    manualEntry: 'Enter by hand',
+    manualEntry: 'Type it in',
     aboutLink: 'About',
+    barcode: 'Find by barcode',
+    demo: 'Try the demo',
+    moreTitle: 'Other ways',
+    recentTitle: 'Recent records',
+    historyLink: 'See all records',
+    recentEmpty: 'No records yet. Only things you bought show up here.',
+    recentExample: 'Example records — not real purchases',
+  },
+  history: {
+    title: 'Records',
+    back: 'Home',
+    exampleBadge: 'Example screen — not your real purchases',
+    exampleNote:
+      "Saving purchases isn't built yet. The rows below are examples of how this screen looks.",
+    plannedTitle: 'Planned (online)',
+    plannedSub: "Tap Bought it to record a purchase. Until then it isn't one.",
+    plannedTag: 'Planned',
+    plannedOn: 'You tapped Buying online on {date}',
+    plannedEmpty: 'Nothing planned.',
+    confirmedTitle: 'Confirmed purchases',
+    confirmedSub: 'Sorted by when you will need it next.',
+    confirmedEmpty: 'No confirmed purchases yet.',
+    boughtOn: 'Bought at {place}, {date}',
+    boughtOnline: 'Bought online, {date}',
+    boughtInStore: 'Bought in store, {date}',
+    online: 'Online',
+    store: 'Store',
+    nextDue: 'Next around {date}',
+    noNextDue: 'No next date',
+    priceUnknown: 'Amount not entered',
+    date: '{month}/{day}',
+    bought: 'Bought it',
+    actualPriceLabel: 'Amount you paid (optional)',
+    actualPriceHint: 'Leave it blank if unsure. It stays as not entered.',
+    invalidPrice: 'Numbers only, please.',
+    save: 'Record purchase',
+    cancel: 'Close',
+    justBought: 'Recorded as bought. It is now under confirmed purchases.',
+    emptyTitle: 'No records yet',
+    emptyBody:
+      'Tap Buying here on a result, or change an online plan to Bought it, and it shows up here. Scans alone are not recorded.',
   },
   capture: {
     hint: 'Fill the frame with the price tag and avoid glare.',
     retake: 'Retake',
-    reading: 'Reading the price tag.',
+    reading: 'Reading the tag…',
   },
   store: {
     title: "Today's store",
-    optional: 'Optional.',
+    optional: 'You can skip this.',
     selected: 'Selected',
     otherLabel: 'Other store name',
     otherPlaceholder: 'Enter the store name',
@@ -37,9 +81,9 @@ export const en: Copy = {
     manualTitle: 'Enter by hand',
     check: 'Please check',
     cta: 'Yes, compare',
-    saving: 'Saving.',
+    saving: 'Saving…',
     back: 'Home',
-    unread: 'Not read',
+    unread: "Couldn't read",
     verified: 'Verified product',
     verifiedSub: 'The barcode matches a registered product, so we filled in its verified size.',
     suggestions: 'Is it one of these?',
@@ -60,7 +104,7 @@ export const en: Copy = {
       perItemAmount: 'Size per item',
       perItemUnit: 'Unit',
       itemCount: 'Count',
-      storePrice: 'Store price (KRW)',
+      storePrice: 'Store price (₩)',
       promoType: 'Deal',
       promoText: 'Deal details',
       promoN: 'Buy',
@@ -89,7 +133,7 @@ export const en: Copy = {
   },
   next: {
     title: 'Got it',
-    body: "We're still building the online price comparison for the next step. No online prices have been checked yet.",
+    body: "Online comparison isn't built yet, so no online prices were checked.",
     storeLine: 'Store: {store}',
     priceLine: 'Store price: ₩{price}',
     noStore: 'No store chosen',
@@ -105,14 +149,130 @@ export const en: Copy = {
     rateLimited: "You've hit the hourly scan limit. Try again later or enter it by hand.",
     tooLarge: 'The photo is too large. Please take it again.',
     image: "Couldn't open the photo. Please take it again.",
-    server: 'The server hit an error while reading the tag. Retake or enter it by hand.',
+    server: 'Server error while reading the tag. Retake it or enter it by hand.',
   },
   commission: "This app doesn't earn commission from any seller right now.",
   version: 'v{version}',
+  ui: {
+    language: 'Language',
+    langEn: 'EN',
+    langKo: '한국어',
+    back: 'Back',
+    home: 'Home',
+    exampleLabel: 'Example screen — not a real lookup',
+  },
+  demo: {
+    banner: 'Demo — recorded example',
+    title: '30-second demo',
+    intro: 'Three examples of how one price tag turns into a comparison receipt.',
+    pickTitle: 'Pick a scenario',
+    pickSub: 'It starts as soon as you pick one.',
+    switchTitle: 'Other scenarios',
+    scenarios: {
+      D1: {
+        short: 'Store wins',
+        title: 'The store wins',
+        sub: 'The same product turns up online, but the store is cheaper.',
+      },
+      D2: {
+        short: 'Shipping decides',
+        title: 'Online wins, but shipping decides',
+        sub: 'Online is cheaper by a little, so shipping could flip it.',
+      },
+      D3: {
+        short: 'Bulk-pack trap',
+        title: 'The bulk-pack trap',
+        sub: 'No same-size match online, only a bigger pack. We compare by unit price only.',
+      },
+    },
+    stepsLabel: 'Steps',
+    steps: {
+      tag: 'Price tag',
+      confirm: 'Confirm',
+      result: 'Receipt',
+    },
+    stepOf: 'Step {n} of 3',
+    stepDone: 'Done',
+    tagTitle: 'Someone snapped this tag in a store',
+    tagAlt: 'Drawing of the {name} price tag. Store price {price}.',
+    tagUnitPrice: '{price} per {base}',
+    tagNext: 'Read the tag',
+    confirmTitle: 'Here is what the app read',
+    confirmIntro:
+      'A field the app is unsure about gets a pink border and "Please check". You fix it, then we compare.',
+    readOnly: "Fields can't be edited in the demo.",
+    resultTitle: 'The verdict for this example',
+    resultIntro:
+      'Next, open the comparison receipt for this example. It uses the same example numbers.',
+    resultOpen: 'Open the receipt',
+    verdicts: {
+      STORE_CHEAPER: 'The store is cheaper',
+      ONLINE_CHEAPER: 'Online is cheaper, but only just',
+      BUNDLE_ONLY: 'No same-size match, only a bigger pack',
+    },
+    prev: 'Previous step',
+    other: 'Pick another scenario',
+    unitBases: {
+      ml: '100ml',
+      g: '100g',
+      m: '10m',
+      sheet: '100 sheets',
+      ea: 'item',
+    },
+  },
   about: {
     title: 'About',
     back: 'Home',
     connection: 'Connection',
+    intro:
+      'Jinjja? compares a store price tag with the same product online, and shows what was compared under which conditions.',
+    principleCode: 'P{n}',
+    principlesTitle: 'Seven promises this app keeps',
+    principles: {
+      p1: {
+        title: 'Unknown stays "unknown"',
+        body: "We never guess a value we couldn't read or look up. Shipping cost is always unknown for now.",
+      },
+      p2: {
+        title: "If we're not sure, we don't recommend",
+        body: 'Items whose size or count may differ are kept out of the comparison and listed under "Needs checking".',
+      },
+      p3: {
+        title: 'If the store is cheaper, we say so',
+        body: "When the store wins, we say it and don't push online links.",
+      },
+      p4: {
+        title: 'We say where and when we looked',
+        body: "We don't claim anything is the best deal anywhere. We always state what we searched and when.",
+      },
+      p5: {
+        title: 'Only purchases you confirm are recorded',
+        body: 'Taking a photo or tapping a link is not a purchase. "Buying online" is a plan until you tap [Bought it].',
+      },
+      p6: {
+        title: 'Online prices are checked fresh',
+        body: "Online prices on screen were just looked up (at most 10 minutes ago), shown with the time. We don't store online price lists.",
+      },
+      p7: {
+        title: 'No ads, no affiliate links',
+        body: "This app doesn't earn commission from any seller right now.",
+      },
+    },
+    privacyTitle: 'Privacy',
+    privacy: {
+      anonymous:
+        "We don't ask for your name or contact details. Only an anonymous ID per device is used.",
+      photo: "Price tag photos aren't stored after they're read.",
+      testMode:
+        'Exception: in field-test mode, tag photos from participants who agreed are stored privately.',
+      purchases: 'Only purchases you confirm yourself are recorded.',
+    },
+    sourceTitle: 'Data source',
+    source:
+      "Online prices come from the Naver Shopping Search API. Coupang prices aren't included yet.",
+    contactTitle: 'Contact',
+    contactEmail: 'A contact email will be listed here soon.',
+    demoLink: 'Try the demo',
     latency: {
       title: 'Shutter → confirm card (this device, for testing)',
       median: 'Median of last {n}: {ms} ms',
@@ -120,6 +280,8 @@ export const en: Copy = {
       none: 'Nothing recorded yet. Scan a price tag to add one.',
     },
   },
+  result: enResult,
+  screens: enScreens,
   auth: {
     loading: 'Connecting.',
     notConnected: 'Not connected to the server.',
@@ -129,4 +291,5 @@ export const en: Copy = {
     noUser: 'The server did not return an anonymous ID.',
     errorDetail: 'Error detail: {message}',
   },
+  ops: enOps,
 };

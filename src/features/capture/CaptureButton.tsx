@@ -3,12 +3,15 @@ import { useNavigate } from 'react-router';
 import { buttonClass } from '../../components/common/Button';
 import { readStoreChoice, storeNameForApi } from '../../components/common/storeChoice';
 import { preloadBarcodeDetector } from '../../lib/barcode';
-import { copy } from '../../lib/i18n';
+import { useCopy } from '../../lib/language';
 import { browserScanDeps } from './browserScanDeps';
 import { scanStore } from './scanSession';
 
 // PLAN 13: a price-tag shape — one corner cut diagonally, a punch hole on the left.
-const TAG_CLIP = 'polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%)';
+// Outer ink layer + inner lime layer inset by the 3px "border" (clip-path cuts real borders off).
+const CUT = 28;
+const TAG_CLIP = `polygon(0 0, calc(100% - ${CUT}px) 0, 100% ${CUT}px, 100% 100%, 0 100%)`;
+const INNER_CLIP = `polygon(0 0, calc(100% - ${CUT - 1}px) 0, 100% ${CUT - 1}px, 100% 100%, 0 100%)`;
 
 /**
  * S1: opens the phone's own camera (`capture="environment"`). The moment a photo is chosen is t0;
@@ -16,6 +19,7 @@ const TAG_CLIP = 'polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%
  */
 export function CaptureButton({ variant = 'tag' }: { variant?: 'tag' | 'retake' }) {
   const navigate = useNavigate();
+  const { t } = useCopy();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.currentTarget;
@@ -41,8 +45,8 @@ export function CaptureButton({ variant = 'tag' }: { variant?: 'tag' | 'retake' 
 
   if (variant === 'retake') {
     return (
-      <label className={buttonClass('primary')}>
-        {copy.capture.retake}
+      <label className={buttonClass({ tone: 'lime' })}>
+        {t.capture.retake}
         {fileInput}
       </label>
     );
@@ -50,14 +54,22 @@ export function CaptureButton({ variant = 'tag' }: { variant?: 'tag' | 'retake' 
 
   return (
     <label
-      className="relative flex min-h-24 w-full cursor-pointer items-center bg-ink py-6 pr-10 pl-16 text-receipt focus-within:ring-4 focus-within:ring-receipt focus-within:ring-inset"
+      // clip-path hides outlines, so focus shows as a butter fill + thick underline instead
+      className="group block w-full cursor-pointer bg-ink p-[3px]"
       style={{ clipPath: TAG_CLIP }}
     >
       <span
-        aria-hidden="true"
-        className="absolute top-1/2 left-6 size-5 -translate-y-1/2 rounded-full bg-paper"
-      />
-      <span className="text-[30px] leading-tight font-extrabold">{copy.home.cta}</span>
+        className="relative flex min-h-24 items-center bg-lime py-6 pr-10 pl-16 text-ink group-focus-within:bg-butter active:bg-butter"
+        style={{ clipPath: INNER_CLIP }}
+      >
+        <span
+          aria-hidden="true"
+          className="absolute top-1/2 left-6 size-5 -translate-y-1/2 rounded-full border-2 border-ink bg-paper"
+        />
+        <span className="text-[30px] leading-tight font-extrabold decoration-4 underline-offset-4 group-focus-within:underline">
+          {t.home.cta}
+        </span>
+      </span>
       {fileInput}
     </label>
   );
