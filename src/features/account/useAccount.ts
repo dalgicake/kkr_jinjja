@@ -4,6 +4,7 @@ import {
   accountRedirectUrl,
   fetchProviderAvailability,
   type LoginIntent,
+  type OAuthProvider,
   type ProviderAvailability,
 } from '../../lib/authFlows';
 import { hasUnusedCode, type AuthErrorKey, type AuthRedirect } from '../../lib/authRedirect';
@@ -32,14 +33,47 @@ export function useProviderAvailability(): ProviderAvailability | null {
 }
 
 const INTENT_KEY = 'jinjja.authIntent';
+const PROVIDER_KEY = 'jinjja.authProvider';
 
-/** Remembered across the Google/Kakao/email round trip, to word the success message. */
-export function rememberIntent(intent: LoginIntent): void {
+/**
+ * Remembered across the Google/Kakao/email round trip, to word the success message and to name
+ * the provider in "That Google login is already used…". No provider = the email link.
+ */
+export function rememberIntent(intent: LoginIntent, provider?: OAuthProvider): void {
   try {
     window.localStorage.setItem(INTENT_KEY, intent);
+    if (provider) window.localStorage.setItem(PROVIDER_KEY, provider);
+    else window.localStorage.removeItem(PROVIDER_KEY);
   } catch {
     // storage blocked: the success message is just the generic one
   }
+}
+
+export function takeProvider(): OAuthProvider | null {
+  try {
+    const v = window.localStorage.getItem(PROVIDER_KEY);
+    window.localStorage.removeItem(PROVIDER_KEY);
+    return v === 'google' || v === 'kakao' ? v : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Seconds between email-link sends from this screen (Supabase refuses faster resends). */
+export const RESEND_COOLDOWN_S = 60;
+
+/**
+ * Seconds left before the link may be sent again, 0 when it may. `sentAt` = ms of the last send
+ * (from this screen, or the user's `email_change_sent_at`); unknown → 0.
+ */
+export function resendWaitSeconds(
+  sentAt: number | null,
+  now: number,
+  cooldownS = RESEND_COOLDOWN_S,
+): number {
+  if (sentAt === null || !Number.isFinite(sentAt)) return 0;
+  const left = Math.ceil((sentAt + cooldownS * 1000 - now) / 1000);
+  return Math.min(Math.max(left, 0), cooldownS);
 }
 
 export function takeIntent(): LoginIntent | null {
@@ -57,7 +91,7 @@ export const redirectTo = (): string =>
   accountRedirectUrl(typeof window === 'undefined' ? '' : window.location.origin);
 
 export type RedirectOutcome =
-  | { kind: 'error'; key: AuthErrorKey }
+  | { kind: 'error'; key: AuthErrorKey; provider: OAuthProvider | null }
   | { kind: 'otherBrowser' }
   | { kind: 'success'; kept: boolean };
 
@@ -77,11 +111,12 @@ export function redirectOutcome(
   if (redirect.kind === 'none') return null;
   if (redirect.kind === 'error') {
     takeIntent();
-    latched = { kind: 'error', key: redirect.key };
+    latched = { kind: 'error', key: redirect.key, provider: takeProvider() };
     return latched;
   }
   if (!ready || typeof window === 'undefined') return null;
   const intent = takeIntent();
+  takeProvider();
   latched = hasUnusedCode(window.location.href)
     ? { kind: 'otherBrowser' }
     : { kind: 'success', kept: intent === 'keep' && !anonymous };

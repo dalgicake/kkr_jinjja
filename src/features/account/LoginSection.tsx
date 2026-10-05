@@ -4,6 +4,7 @@ import { AlertIcon } from '../../components/common/Icons';
 import { SectionBlock } from '../../components/common/SectionBlock';
 import { OAUTH_PROVIDERS, isAnonymous, linkedMethods } from '../../lib/authFlows';
 import { useCopy } from '../../lib/language';
+import { KeepEmail } from './KeepEmail';
 import { EmailForm, ProviderButtons } from './LoginForms';
 import { useProviderAvailability } from './useAccount';
 
@@ -28,7 +29,7 @@ export function LoginSection({
 
   if (!isAnonymous(user)) {
     const linked = linkedMethods(user);
-    const needsEmail = !user?.email && !user?.new_email;
+    const needsEmail = !user?.email;
     const providers = OAUTH_PROVIDERS.filter((p) => !linked.includes(p));
     return (
       <SectionBlock
@@ -38,12 +39,7 @@ export function LoginSection({
         sub={t.account.keep.addSub}
       >
         {needsEmail && (
-          <EmailForm
-            user={user}
-            intent="keep"
-            available={emailOn}
-            sendLabel={t.account.keep.emailSend}
-          />
+          <KeepEmail user={user} available={emailOn} sendLabel={t.account.keep.emailSend} />
         )}
         {providers.length > 0 && (
           <ProviderButtons
@@ -68,15 +64,12 @@ export function LoginSection({
         title={t.account.keep.title}
         sub={t.account.keep.sub}
       >
-        {user?.new_email ? null : (
-          <EmailForm
-            user={user}
-            intent="keep"
-            available={emailOn}
-            sendLabel={t.account.keep.emailSend}
-            onSignInInstead={openExisting}
-          />
-        )}
+        <KeepEmail
+          user={user}
+          available={emailOn}
+          sendLabel={t.account.keep.emailSend}
+          onSignInInstead={openExisting}
+        />
         <ProviderButtons
           user={user}
           intent="keep"

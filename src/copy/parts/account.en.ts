@@ -10,7 +10,10 @@ export const enAccount: Copy['account'] = {
     title: 'Sign-in status',
     loading: 'Checking your account.',
     notConnected: "Not connected to the server, so account settings aren't available.",
-    error: "Couldn't load your account. Refresh the page.",
+    error: "Couldn't start a session right now. Check your connection and try again.",
+    errorBusy:
+      'Too many sessions were started from this network just now. Wait a minute, then try again.',
+    retry: 'Try again',
     anonymous: 'Using an anonymous ID',
     anonymousBody:
       'Your records are kept under the anonymous ID on this device only. Sign in to keep them if you change phones.',
@@ -27,7 +30,7 @@ export const enAccount: Copy['account'] = {
   },
   keep: {
     title: 'Keep your records',
-    sub: 'Sign in and the records on this device move to that account as they are. Nothing is lost.',
+    sub: "Sign in and this device's records move to your account unchanged. Nothing is lost.",
     addTitle: 'Add a sign-in method',
     addSub: 'Any method you add opens the same account.',
     allLinked: 'Every available sign-in method is already linked.',
@@ -45,7 +48,7 @@ export const enAccount: Copy['account'] = {
     title: 'Already have an account?',
     sub: 'Sign in to an account you made before.',
     warning:
-      "Records made on this device with the anonymous ID won't move to that account, and you won't see them here after you sign in. To keep them, use \"Keep your records\" above instead.",
+      'Records made on this device with the anonymous ID won\'t move to that account, and you won\'t see them here after you sign in. To keep them, use "Keep your records" above instead.',
     open: 'Sign in to an existing account',
     close: 'Close',
     emailSend: 'Send sign-in link',
@@ -54,17 +57,21 @@ export const enAccount: Copy['account'] = {
     title: 'Check your inbox',
     body: 'We sent a link to {email}. Open it on this phone, in this browser, to finish.',
     again: 'Use a different email',
+    resend: 'Send the link again',
+    resendWait: 'You can send it again in {seconds} seconds.',
+    resent: 'Sent again.',
   },
   redirect: {
     success: 'Signed in.',
-    kept: 'Signed in. The records from this device are in this account as they were.',
+    kept: "Signed in. This device's records are now in your account.",
     otherBrowser:
       "The link was opened in a different browser. Open it in the browser where you asked for it. If you were adding an email, it's confirmed and shows up when you go back to that browser.",
     dismiss: 'Close',
   },
   errors: {
     identityExists:
-      "This Google or Kakao account is already used by another Jinjja? account. If you sign in with it, records from this anonymous ID won't move over, and you won't see them here anymore.",
+      'That {provider} login is already used by another Jinjja? account. Sign in with it instead.',
+    someProvider: 'Google or Kakao',
     emailExists:
       "An account with this email already exists. If you sign in to it, records from this anonymous ID won't move over, and you won't see them here anymore.",
     badEmail: 'Check the email address.',
@@ -104,7 +111,7 @@ export const enAccount: Copy['account'] = {
   },
   remove: {
     title: 'Delete account',
-    body: "Deletes your purchases, your scan, correction and report records, your nickname and the account. This can't be undone.",
+    body: "Deletes your account and everything in it: purchases, scans, corrections, reports and your nickname. This can't be undone.",
     start: 'Delete account',
     confirmTitle: 'Delete everything?',
     confirmBody: 'To confirm, type "{word}" below.',

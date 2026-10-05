@@ -38,7 +38,15 @@ export type AuthState =
   | { status: 'signed_in'; userId: string }
   /** No UI text here: the screen maps `code` to copy. `detail` is the raw technical message. */
   | { status: 'error'; code: 'no_user' }
-  | { status: 'error'; code: 'request_failed'; detail: string };
+  /** `rateLimited`: the auth server answered 429 (too many new sessions from this network). */
+  | { status: 'error'; code: 'request_failed'; detail: string; rateLimited: boolean };
+
+/** True when an auth error is a 429 / rate limit (supabase-js AuthError exposes `status`). */
+export function isRateLimited(e: unknown): boolean {
+  if (typeof e !== 'object' || e === null) return false;
+  const { status, code } = e as { status?: unknown; code?: unknown };
+  return status === 429 || code === 'over_request_rate_limit';
+}
 
 let pending: Promise<AuthState> | null = null;
 
@@ -72,6 +80,7 @@ async function signIn(): Promise<AuthState> {
       status: 'error',
       code: 'request_failed',
       detail: e instanceof Error ? e.message : String(e),
+      rateLimited: isRateLimited(e),
     };
   }
 }

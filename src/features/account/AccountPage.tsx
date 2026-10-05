@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { TextButton } from '../../components/common/Button';
+import { Button, TextButton } from '../../components/common/Button';
 import { LanguageToggle } from '../../components/common/LanguageToggle';
 import { ScreenHeader } from '../../components/common/ScreenHeader';
 import { SectionBlock } from '../../components/common/SectionBlock';
-import { useAuth, useAuthUser } from '../../lib/auth';
+import { useAuth, useAuthRetry, useAuthUser } from '../../lib/auth';
 import { isAnonymous } from '../../lib/authFlows';
 import { withoutAuthParams } from '../../lib/authRedirect';
 import { useCopy } from '../../lib/language';
@@ -24,6 +24,7 @@ import { redirectOutcome, type RedirectOutcome } from './useAccount';
 export function AccountPage() {
   const { t } = useCopy();
   const auth = useAuth();
+  const retry = useAuthRetry();
   const user = useAuthUser();
   const navigate = useNavigate();
   const [existingOpen, setExistingOpen] = useState(false);
@@ -74,7 +75,18 @@ export function AccountPage() {
           {t.account.status.notConnected}
         </Note>
       )}
-      {auth.status === 'error' && <Note kind="error">{t.account.status.error}</Note>}
+      {auth.status === 'error' && (
+        <Note kind="error" testId="account-session-error">
+          <p>
+            {auth.code === 'request_failed' && auth.rateLimited
+              ? t.account.status.errorBusy
+              : t.account.status.error}
+          </p>
+          <Button tone="white" full={false} onClick={retry} data-testid="account-retry">
+            {t.account.status.retry}
+          </Button>
+        </Note>
+      )}
 
       {signedIn && (
         <>
@@ -109,7 +121,11 @@ function RedirectNotice({
   if (outcome.kind === 'error')
     return (
       <div className="flex flex-col gap-1">
-        <AuthError errorKey={outcome.key} onSignInInstead={onSignInInstead} />
+        <AuthError
+          errorKey={outcome.key}
+          provider={outcome.provider}
+          onSignInInstead={onSignInInstead}
+        />
         <TextButton onClick={onDismiss}>{t.account.redirect.dismiss}</TextButton>
       </div>
     );

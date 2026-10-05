@@ -19,15 +19,21 @@ const OFFERS_SIGN_IN: readonly AuthErrorKey[] = ['identityExists', 'emailExists'
 
 export function AuthError({
   errorKey,
+  provider,
   onSignInInstead,
 }: {
   errorKey: AuthErrorKey;
+  /** Names the provider in the "already used" message; unknown → "Google or Kakao". */
+  provider?: OAuthProvider | null;
   onSignInInstead?: () => void;
 }) {
   const { t } = useCopy();
+  const message = fill(t.account.errors[errorKey], {
+    provider: provider ? t.account.methods[provider] : t.account.errors.someProvider,
+  });
   return (
     <Note kind="error" testId="account-error">
-      <p>{t.account.errors[errorKey]}</p>
+      <p>{message}</p>
       {onSignInInstead && OFFERS_SIGN_IN.includes(errorKey) && (
         <TextButton onClick={onSignInInstead}>{t.account.errors.signInInstead}</TextButton>
       )}
@@ -43,7 +49,8 @@ type EmailState =
 
 /**
  * Email link. intent 'keep' → updateUser (anonymous user becomes this email, same id, records
- * stay); 'signIn' → signInWithOtp for an account made earlier. Shows "Check your inbox" after.
+ * stay); 'signIn' → signInWithOtp for an account made earlier. Shows "Check your inbox" after,
+ * unless `onSent` is given (the caller shows it, e.g. KeepEmail for the pending address).
  */
 export function EmailForm({
   user,
@@ -51,12 +58,14 @@ export function EmailForm({
   available,
   sendLabel,
   onSignInInstead,
+  onSent,
 }: {
   user: User | null;
   intent: LoginIntent;
   available: boolean;
   sendLabel: string;
   onSignInInstead?: () => void;
+  onSent?: (email: string) => void;
 }) {
   const { t } = useCopy();
   const id = useId();
@@ -80,6 +89,11 @@ export function EmailForm({
     setState({ step: 'sending' });
     rememberIntent(intent);
     const r = await sendEmailLink(supabase.auth, user, email, intent, redirectTo());
+    if (r.ok && onSent) {
+      setState({ step: 'idle' });
+      onSent(email.trim());
+      return;
+    }
     setState(r.ok ? { step: 'sent', email: email.trim() } : { step: 'error', key: r.key });
   };
 
@@ -130,18 +144,18 @@ export function ProviderButtons({
 }) {
   const { t } = useCopy();
   const [leaving, setLeaving] = useState<OAuthProvider | null>(null);
-  const [error, setError] = useState<AuthErrorKey | null>(null);
+  const [error, setError] = useState<{ key: AuthErrorKey; provider: OAuthProvider } | null>(null);
 
   const go = async (provider: OAuthProvider) => {
     if (!supabase) return;
     setError(null);
     setLeaving(provider);
-    rememberIntent(intent);
+    rememberIntent(intent, provider);
     const r = await startProviderLogin(supabase.auth, user, provider, intent, redirectTo());
     // on success the browser is already navigating away
     if (!r.ok) {
       setLeaving(null);
-      setError(r.key);
+      setError({ key: r.key, provider });
     }
   };
 
@@ -170,7 +184,7 @@ export function ProviderButtons({
         );
       })}
       {!availability && <p className="text-[13px] text-muted">{t.account.keep.checking}</p>}
-      {error && <AuthError errorKey={error} />}
+      {error && <AuthError errorKey={error.key} provider={error.provider} />}
     </div>
   );
 }
