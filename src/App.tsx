@@ -1,6 +1,7 @@
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router';
 import { Footer } from './components/common/Footer';
 import { AboutPage } from './features/about/AboutPage';
+import { ConfirmPage } from './features/confirm/ConfirmPage';
 import { HomePage } from './features/home/HomePage';
 import { AuthProvider } from './lib/auth';
 
@@ -23,6 +24,7 @@ export default function App() {
           <Route element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path="about" element={<AboutPage />} />
+            <Route path="confirm" element={<ConfirmPage />} />
             <Route path="*" element={<HomePage />} />
           </Route>
         </Routes>

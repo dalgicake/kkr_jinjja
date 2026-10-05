@@ -4,7 +4,9 @@ import { describe, expect, it } from 'vitest';
 import { Footer } from '../components/common/Footer';
 import { ko } from '../copy/ko';
 import { AuthProvider } from '../lib/auth';
+import { fill } from '../lib/i18n';
 import { AboutPage } from './about/AboutPage';
+import { LatencyDebug } from './about/LatencyDebug';
 import { HomePage } from './home/HomePage';
 
 const render = (node: React.ReactNode) =>
@@ -25,6 +27,22 @@ describe('Phase 0 screens (no Supabase env)', () => {
     expect(html).toContain(ko.app.name);
     expect(html).toContain(ko.commission);
     expect(html).toContain('v0.001');
+  });
+  it('about?debug shows the shutter → card latency read-out; plain /about does not', () => {
+    const at = (url: string) =>
+      renderToString(
+        <AuthProvider>
+          <MemoryRouter initialEntries={[url]}>
+            <AboutPage />
+          </MemoryRouter>
+        </AuthProvider>,
+      );
+    expect(at('/about?debug')).toContain(ko.about.latency.title);
+    expect(at('/about?debug')).toContain(ko.about.latency.none); // no samples on the server
+    expect(at('/about')).not.toContain(ko.about.latency.title);
+    const html = renderToString(<LatencyDebug samples={[4000, 7000, 5000]} />);
+    expect(html).toContain(fill(ko.about.latency.median, { n: 3, ms: 5000 }));
+    expect(html).toContain(fill(ko.about.latency.last, { ms: 5000 }));
   });
   it('about shows "not connected" instead of crashing or faking an id', () => {
     const html = render(<AboutPage />);

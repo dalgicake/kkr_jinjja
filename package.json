@@ -16,14 +16,19 @@
     "format": "prettier --write .",
     "check:keys": "node scripts/check-keys.mjs",
     "check:words": "node scripts/check-words.mjs",
+    "eval:tags": "tsx scripts/eval-tags.ts",
     "check": "npm run typecheck && npm run lint && npm run test && npm run build && npm run check:keys && npm run check:words"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.131.0",
     "@supabase/supabase-js": "^2.117.2",
+    "barcode-detector": "^3.2.2",
     "pretendard": "^1.3.9",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "react-router": "^8.4.0"
+    "react-router": "^8.4.0",
+    "zod": "^4.6.5",
+    "zxing-wasm": "3.1.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -38,6 +43,7 @@
     "globals": "^17.13.0",
     "prettier": "^3.9.9",
     "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.71.0",
     "vite": "^8.3.2",
