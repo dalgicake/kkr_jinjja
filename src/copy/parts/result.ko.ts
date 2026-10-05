@@ -98,8 +98,8 @@ export const koResult = {
   },
   actions: {
     label: '어떻게 할까요?',
-    store: '마트에서 살게요',
-    online: '온라인으로 살게요',
+    store: '마트에서 살래요',
+    online: '온라인 살래요',
     skip: '안 살래요',
   },
   report: {

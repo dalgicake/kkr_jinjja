@@ -1,15 +1,16 @@
 import type { Copy } from '../../copy/ko';
 import { storeDisplayName } from '../../components/common/StoreChips';
-import { fill } from '../../lib/i18n';
+import { fill, monthAbbr } from '../../lib/i18n';
 import { monthDay } from './historyLogic';
 import type { PurchaseRecord } from './types';
 
-/** 'YYYY-MM-DD' → "10/4" (en) / "10월 4일" (ko). */
+/** 'YYYY-MM-DD' → "Oct 4" (en, same as /stats and /admin) / "10월 4일" (ko). */
 export function dayLabel(t: Copy, isoDay: string): string {
-  return fill(t.history.date, monthDay(isoDay));
+  const { month, day } = monthDay(isoDay);
+  return fill(t.history.date, { month, day, mon: monthAbbr(month) });
 }
 
-/** Where and when it was bought ("Bought at E-mart, 10/1"), or when the online plan was made. */
+/** Where and when it was bought ("Bought at E-Mart, Oct 1"), or when the online plan was made. */
 export function placeLine(t: Copy, r: PurchaseRecord): string {
   if (r.status === 'planned') return fill(t.history.plannedOn, { date: dayLabel(t, r.createdOn) });
   const date = dayLabel(t, r.purchasedOn ?? r.createdOn);

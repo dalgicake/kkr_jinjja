@@ -3,6 +3,7 @@
  * under the pink ExampleLabel. Candidate prices are made up to show the layout — not Naver results.
  */
 
+import type { Copy } from '../../copy/ko';
 import type { Unit } from '../../../shared/types.js';
 
 export type LinkRelation = 'same_item' | 'size_diff' | 'wrong';
@@ -47,7 +48,8 @@ export interface AdminReport {
   id: string;
   kind: ReportKind;
   productLabel: string;
-  note: string | null;
+  /** Example notes are copy keys so they read in the UI language (real notes will be user text). */
+  note: keyof Copy['ops']['admin']['exampleNotes'] | null;
   createdOn: string; // YYYY-MM-DD
 }
 
@@ -137,7 +139,7 @@ export const EXAMPLE_REPORTS: readonly AdminReport[] = [
     id: 'example-r1',
     kind: 'wrong_size',
     productLabel: '다우니 섬유유연제 실내건조 2.6L 1개',
-    note: '2개 묶음이 같은 상품으로 나왔어요',
+    note: 'twoPackSameItem',
     createdOn: '2026-10-04',
   },
   {

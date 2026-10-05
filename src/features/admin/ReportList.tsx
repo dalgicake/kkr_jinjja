@@ -19,7 +19,7 @@ function ReportRow({ r }: { r: AdminReport }) {
         <span className="text-[13px] text-muted tabular-nums">{shortDate(r.createdOn, lang)}</span>
       </div>
       <p className="text-[15px] font-bold">{fill(a.reportProduct, { label: r.productLabel })}</p>
-      {r.note && <p className="text-[15px]">{fill(a.reportNote, { note: r.note })}</p>}
+      {r.note && <p className="text-[15px]">{fill(a.reportNote, { note: a.exampleNotes[r.note] })}</p>}
       <div className="grid grid-cols-2 gap-2">
         <Button tone="sky" aria-pressed={action === 'recheck'} onClick={() => setAction('recheck')}>
           {a.recheck}
@@ -48,7 +48,9 @@ export function ReportList({ reports }: { reports: readonly AdminReport[] }) {
     <SectionBlock
       tone="pink"
       id="admin-reports"
-      title={fill(t.ops.admin.reportsTitle, { n: reports.length })}
+      title={fill(reports.length === 1 ? t.ops.admin.reportsTitleOne : t.ops.admin.reportsTitle, {
+        n: reports.length,
+      })}
     >
       <ul className="flex flex-col gap-4">
         {reports.map((r) => (

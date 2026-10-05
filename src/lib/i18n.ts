@@ -31,6 +31,13 @@ export function resolveLang(search: string, stored: string | null): Lang {
   return langFromSearch(search) ?? (isLang(stored) ? stored : DEFAULT_LANG);
 }
 
+const EN_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+/** 1-12 → "Jan".."Dec", for `{mon}` in en date templates (ko templates ignore it). */
+export function monthAbbr(month: number): string {
+  return EN_MONTHS[month - 1] ?? String(month);
+}
+
 /** Replace `{name}` placeholders. Unknown placeholders are left as-is. */
 export function fill(template: string, vars: Record<string, string | number>): string {
   return template.replace(/\{(\w+)\}/g, (match, key: string) =>

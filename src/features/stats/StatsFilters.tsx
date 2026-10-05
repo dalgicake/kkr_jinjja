@@ -40,7 +40,7 @@ export function StatsFilters({
           {MODES.map((m) => (
             <Chip
               key={m}
-              tone="sky"
+              tone="lime"
               selected={modes.includes(m)}
               onClick={() => onModes(toggleMode(modes, m))}
             >

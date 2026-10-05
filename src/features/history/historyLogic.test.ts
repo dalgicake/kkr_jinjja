@@ -69,12 +69,12 @@ describe('history logic', () => {
 describe('history wording', () => {
   it('dates and places in both languages', () => {
     expect(dayLabel(ko, '2026-10-04')).toBe('10월 4일');
-    expect(dayLabel(en, '2026-10-04')).toBe('10/4');
-    expect(placeLine(en, byId('example-4'))).toBe('Bought at E-Mart, 9/28');
-    expect(placeLine(en, byId('example-5'))).toBe('Bought online, 9/20');
-    expect(placeLine(ko, byId('example-6'))).toBe('9월 15일 동네마트에서 샀어요');
-    expect(placeLine(en, byId('example-1'))).toBe('You tapped Buying online on 10/4');
-    expect(dueLine(en, byId('example-3'))).toBe('Next around 10/15');
+    expect(dayLabel(en, '2026-10-04')).toBe('Oct 4');
+    expect(placeLine(en, byId('example-4'))).toBe('Bought at E-Mart, Sep 28');
+    expect(placeLine(en, byId('example-5'))).toBe('Bought online, Sep 20');
+    expect(placeLine(ko, byId('example-6'))).toBe('9월 15일 하나로마트에서 샀어요');
+    expect(placeLine(en, byId('example-1'))).toBe('Planned to buy online, Oct 4');
+    expect(dueLine(en, byId('example-3'))).toBe('Next around Oct 15');
     expect(dueLine(ko, byId('example-6'))).toBe(ko.history.noNextDue);
   });
 });

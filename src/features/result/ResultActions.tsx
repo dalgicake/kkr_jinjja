@@ -16,7 +16,8 @@ export function ActionBar({
 }) {
   const { t } = useCopy();
   const ta = t.result.actions;
-  const small = 'px-2! text-[15px]! break-keep';
+  // nowrap + tight padding keeps every label on one line at 390px in both languages.
+  const small = 'px-1.5! text-[15px]! whitespace-nowrap';
   return (
     <nav
       aria-label={ta.label}

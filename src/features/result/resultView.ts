@@ -5,7 +5,7 @@ import { totalAmount, unitPrice } from '../../../shared/units';
 import type { Tone } from '../../components/common/tone';
 import type { StoreId } from '../../components/common/storeChoice';
 import type { Copy } from '../../copy/ko';
-import { fill } from '../../lib/i18n';
+import { fill, monthAbbr } from '../../lib/i18n';
 import type { PreviewVerdict, ResultCandidate, ResultFixture } from './types';
 
 type Won = (n: number) => string;
@@ -116,7 +116,7 @@ export function lastPurchaseLine(t: Copy, won: Won, f: ResultFixture): string | 
   if (!p) return null;
   const channel = p.channel === 'online' ? t.result.lastOnline : storeLabel(t, p.storeKey ?? null);
   return fill(t.result.lastPurchase, {
-    date: fill(t.result.date, { month: p.month, day: p.day }),
+    date: fill(t.result.date, { month: p.month, day: p.day, mon: monthAbbr(p.month) }),
     channel,
     price: won(p.price),
   });

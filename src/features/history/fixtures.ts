@@ -120,7 +120,7 @@ export const EXAMPLE_PURCHASES: readonly PurchaseRecord[] = [
     status: 'confirmed',
     pricePaid: 4480,
     quantity: 1,
-    storeName: '동네마트',
+    storeName: 'hanaro',
     purchasedOn: '2026-09-15',
     nextDueOn: null,
     createdOn: '2026-09-15',

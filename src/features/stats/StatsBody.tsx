@@ -143,7 +143,7 @@ export function StatsBody({ stats = EXAMPLE_STATS }: { stats?: StatsSnapshot }) 
           <StatTile
             tone="sky"
             wide
-            label={s.savings}
+            label={s.savingsTotal}
             value={won(stats.potentialSavingsWon)}
             sub={s.savingsSub}
           />

@@ -30,7 +30,7 @@ export const en: Copy = {
     plannedTitle: 'Planned (online)',
     plannedSub: "Tap Bought it to record a purchase. Until then it isn't one.",
     plannedTag: 'Planned',
-    plannedOn: 'You tapped Buying online on {date}',
+    plannedOn: 'Planned to buy online, {date}',
     plannedEmpty: 'Nothing planned.',
     confirmedTitle: 'Confirmed purchases',
     confirmedSub: 'Sorted by when you will need it next.',
@@ -43,7 +43,7 @@ export const en: Copy = {
     nextDue: 'Next around {date}',
     noNextDue: 'No next date',
     priceUnknown: 'Amount not entered',
-    date: '{month}/{day}',
+    date: '{mon} {day}',
     bought: 'Bought it',
     actualPriceLabel: 'Amount you paid (optional)',
     actualPriceHint: 'Leave it blank if unsure. It stays as not entered.',
@@ -53,7 +53,7 @@ export const en: Copy = {
     justBought: 'Recorded as bought. It is now under confirmed purchases.',
     emptyTitle: 'No records yet',
     emptyBody:
-      'Tap Buying here on a result, or change an online plan to Bought it, and it shows up here. Scans alone are not recorded.',
+      'Tap Buy at store on a result, or change an online plan to Bought it, and it shows up here. Scans alone are not recorded.',
   },
   capture: {
     hint: 'Fill the frame with the price tag and avoid glare.',
@@ -225,7 +225,7 @@ export const en: Copy = {
     back: 'Home',
     connection: 'Connection',
     intro:
-      'Jinjja? compares a store price tag with the same product online, and shows what was compared under which conditions.',
+      'Jinjja? checks a store price tag against the same product online, and shows exactly what it compared and how.',
     principleCode: 'P{n}',
     principlesTitle: 'Seven promises this app keeps',
     principles: {
@@ -247,7 +247,7 @@ export const en: Copy = {
       },
       p5: {
         title: 'Only purchases you confirm are recorded',
-        body: 'Taking a photo or tapping a link is not a purchase. "Buying online" is a plan until you tap [Bought it].',
+        body: 'Taking a photo or tapping a link is not a purchase. "Buy online" is a plan until you tap [Bought it].',
       },
       p6: {
         title: 'Online prices are checked fresh',

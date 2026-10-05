@@ -86,3 +86,30 @@
 - [ ] **B0-6 상품 30개 목록** (PLAN 부록 B 형식)
   - 어떻게 하면 되는가: 집에 있는 실제 제품을 보며 `products.csv`를 채운다. 세탁 5 / 주방 3 / 욕실 5 / 종이 4 / 가공식품 8 / 음료 5, 바코드 숫자까지. 신선식품·주류·의약품은 빼기. 예시 줄은 PLAN.md 부록 B. 다 되면 저장소 최상위 `products.csv`로 넣거나 다운로드 폴더에 두고 알려 준다.
   - 그동안: Phase 2의 파서와 판정 로직(부록 A·D 테스트)을 먼저 만든다.
+
+## 로그인 (2026-10-05 기령 결정: 익명으로 먼저 쓰고, 원하면 로그인 — 이메일 링크·구글·카카오)
+
+공통: 두 곳 모두 **리디렉션 URI**는 `https://kagzhfhhuwcuwncmxayu.supabase.co/auth/v1/callback` 하나다. 발급받은 비밀값은 채팅에 붙이지 말고 마지막 단계에서 Supabase 대시보드에 직접 넣는다. 이메일 링크 로그인은 설정 없이 바로 된다(무료 메일 발송은 시간당 2통 제한).
+
+- [ ] **B-L1 구글 로그인** (약 10분, `devvingcheshire@gmail.com` 계정 추천)
+  - 어떻게 하면 되는가
+    1. https://console.cloud.google.com → 위쪽 프로젝트 선택 상자 → **새 프로젝트** → 이름 `kkr-jinjja` → **만들기** → 만든 프로젝트 선택
+    2. 왼쪽 메뉴(☰) → **API 및 서비스** → **OAuth 동의 화면**(또는 **Google 인증 플랫폼**) → **시작하기**
+    3. 앱 이름 `Jinjja`, 사용자 지원 이메일 선택 → **다음** → 대상 **외부** → **다음** → 연락처 이메일 → **다음** → 정책 동의 체크 → **만들기**
+    4. 왼쪽 **클라이언트** → **+ 클라이언트 만들기** → 애플리케이션 유형 **웹 애플리케이션** → 이름 `jinjja-web`
+    5. **승인된 리디렉션 URI** → **+ URI 추가** → `https://kagzhfhhuwcuwncmxayu.supabase.co/auth/v1/callback` → **만들기**
+    6. 뜨는 창에서 **클라이언트 ID**, **클라이언트 보안 비밀번호**를 복사(창을 닫으면 클라이언트를 눌러 다시 볼 수 있음)
+    7. 왼쪽 **대상** → 게시 상태가 '테스트'면 **테스트 사용자 + Add users**에 로그인할 Gmail 주소들을 추가(또는 **앱 게시**)
+    8. https://supabase.com/dashboard → 프로젝트 → **Authentication** → **Sign In / Providers** → **Google** → **Enable** 켜기 → Client ID, Client Secret 붙여 넣기 → **Save**
+  - 그동안: 이메일 링크 로그인과 계정 화면을 먼저 만들고, 구글 버튼은 "준비 중"으로 표시한다.
+
+- [ ] **B-L2 카카오 로그인** (약 10분. 콘솔 메뉴 이름이 조금 다를 수 있음)
+  - 어떻게 하면 되는가
+    1. https://developers.kakao.com → 로그인 → **내 애플리케이션** → **애플리케이션 추가하기** → 앱 이름 `진짜`, 회사명(개인이면 이름) → 저장
+    2. 만든 앱 → **앱 설정 → 플랫폼** → **Web 플랫폼 등록** → 사이트 도메인 `http://localhost:5173` (배포 주소가 생기면 추가)
+    3. **제품 설정 → 카카오 로그인** → **활성화 설정 ON** → **Redirect URI 등록** → `https://kagzhfhhuwcuwncmxayu.supabase.co/auth/v1/callback` → 저장
+    4. **카카오 로그인 → 동의항목** → 닉네임, 프로필 사진을 '필수' 또는 '선택'으로 설정 (카카오계정 이메일은 비즈 앱이어야 해서 안 열려 있으면 건너뛴다)
+    5. **카카오 로그인 → 보안** → Client Secret **코드 생성** → 활성화 상태 **사용함** → 코드 복사
+    6. **앱 설정 → 앱 키** → **REST API 키** 복사
+    7. Supabase 대시보드 → **Authentication → Sign In / Providers → Kakao** → **Enable** → REST API 키를 Client ID에, 5번 코드를 Client Secret에 → 4번에서 이메일을 못 켰으면 **Allow users without an email** 켜기 → **Save**
+  - 그동안: 카카오 버튼은 "준비 중"으로 표시한다.

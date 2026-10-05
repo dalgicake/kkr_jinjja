@@ -65,14 +65,14 @@ export const enResult: Copy['result'] = {
     title: 'Bundles and other sizes',
     sub: 'Compared by unit price only. The full amount you pay is shown too.',
     insight:
-      "A {count}-pack is {pct}% cheaper {unit}, but you pay {total} at once. Only worth it if you'll use that much.",
-    total: '{price} at once',
+      "A {count}-pack is {pct}% cheaper {unit}, but it's {total} upfront. Only worth it if you'll use that much.",
+    total: '{price} upfront',
     empty: 'No bundles or other sizes found.',
   },
   uncertain: {
     title: 'Needs checking',
     sub: 'Not used in the verdict. Not recommended.',
-    badge: 'Needs check',
+    badge: 'Needs checking',
     empty: 'Nothing needs checking.',
     reasons: {
       variantUnclear: 'Type may differ',
@@ -90,7 +90,7 @@ export const enResult: Copy['result'] = {
   },
   lastPurchase: 'Last time: {price} at {channel} on {date}.',
   lastOnline: 'an online seller',
-  date: '{month}/{day}',
+  date: '{mon} {day}',
   time: '{hour}:{minute}',
   promo: {
     banner: '{promo} deal on now. Compare for {count} items?',

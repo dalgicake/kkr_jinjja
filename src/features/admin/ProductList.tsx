@@ -71,7 +71,7 @@ function ProductRow({ p }: { p: AdminProduct }) {
             tone={p.linkCount > 0 ? 'lime' : 'white'}
             icon={p.linkCount > 0 ? 'check' : 'none'}
           >
-            {fill(a.links, { n: p.linkCount })}
+            {fill(p.linkCount === 1 ? a.linksOne : a.links, { n: p.linkCount })}
           </Badge>
         </div>
       </div>
@@ -101,7 +101,9 @@ export function ProductList({ products }: { products: readonly AdminProduct[] })
     <SectionBlock
       tone="sky"
       id="admin-products"
-      title={fill(t.ops.admin.productsTitle, { n: products.length })}
+      title={fill(products.length === 1 ? t.ops.admin.productsTitleOne : t.ops.admin.productsTitle, {
+        n: products.length,
+      })}
     >
       <ul className="flex flex-col gap-4">
         {products.map((p) => (

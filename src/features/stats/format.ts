@@ -21,7 +21,7 @@ export function countLabel(t: Copy, n: number): string {
 }
 
 export function peopleLabel(t: Copy, n: number): string {
-  return fill(t.ops.people, { n: formatWon(n) });
+  return fill(n === 1 ? t.ops.peopleOne : t.ops.people, { n: formatWon(n) });
 }
 
 /** "2026-10-05" → "Oct 5" / "10월 5일". Date-only strings are read as calendar dates (no TZ shift). */

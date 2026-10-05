@@ -27,6 +27,12 @@
     @apply bg-paper font-sans text-ink antialiased;
     font-weight: 400;
   }
+  /* Korean wraps at spaces only (no "찾 / 음", no "16,500 / 원"). break-word still rescues a
+     too-long word without shrinking min-content the way `anywhere` would. */
+  html:lang(ko) body {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
 }
 
 /* 모든 가격: tabular-nums. Tailwind 유틸리티 `tabular-nums`와 같은 값 */

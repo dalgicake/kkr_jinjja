@@ -25,7 +25,7 @@ export function ScenarioPicker({
         </h2>
         <div className="flex flex-wrap gap-2">
           {DEMO_SCENARIO_IDS.map((id) => (
-            <Chip key={id} tone="sky" selected={id === current} onClick={() => onPick(id)}>
+            <Chip key={id} tone="lime" selected={id === current} onClick={() => onPick(id)}>
               {t.demo.scenarios[id].short}
             </Chip>
           ))}
