@@ -25,7 +25,7 @@
 
 ### H0-1 계정·키 (PLAN 14장)
 
-- [ ] **B0-1 Supabase 프로젝트** (약 10분)
+- [해결] **B0-1 Supabase 프로젝트** (2026-10-05) — 계정 devvingcheshire@gmail.com, 프로젝트 "devvingcheshire@gmail.com's Project"(ref `kagzhfhhuwcuwncmxayu`, 리전 도쿄 ap-northeast-1 — 서울 아님, 기령이 그대로 쓰기로 결정). CLI 로그인 후 Claude가 익명 로그인 켜기·마이그레이션 0001 적용·비공개 버킷 test-photos 생성·로컬 .env.local 작성까지 하고 확인(테이블 9개, search_products, 익명 가입, RLS). 같은 이름의 10/4 프로젝트(ref wdybxgop…)는 비어 있고 손대지 않음.
   - 어떻게 하면 되는가
     1. https://supabase.com/dashboard → 로그인 → **New project**
     2. Name `kkr-jinjja` / Database Password는 **Generate**로 만들고 비밀번호 관리자에 저장 / Region **Northeast Asia (Seoul)** → **Create new project** (2분쯤 기다림)
