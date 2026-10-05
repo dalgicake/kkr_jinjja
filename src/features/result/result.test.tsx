@@ -191,6 +191,22 @@ describe('result screen', () => {
     );
   });
 
+  it('pink headers get a white strip so the pink example label stands alone', () => {
+    for (const id of ['no-match', 'need-store-price']) {
+      const html = render(`/preview/result/${id}`);
+      expect(html.indexOf('data-testid="label-gap"'), id).toBeGreaterThan(-1);
+      expect(html.indexOf('data-testid="label-gap"')).toBeLessThan(
+        html.indexOf('data-testid="example-label"'),
+      );
+    }
+    expect(render('/preview/result/store-cheaper')).not.toContain('label-gap');
+  });
+
+  it('seller link reads naturally and the same-item chips use one selected style', () => {
+    expect(render('/preview/result/online-cheaper')).toContain(esc(en.result.link.view));
+    expect(en.result.link.view).toBe('Open seller page');
+  });
+
   it('promo example shows the tangerine banner; no-match never names a cheaper side', () => {
     expect(render('/preview/result/promo-1plus1')).toContain('data-testid="promo-banner"');
     const none = render('/preview/result/no-match');

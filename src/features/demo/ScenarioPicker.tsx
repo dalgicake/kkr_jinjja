@@ -5,8 +5,10 @@ import { useCopy } from '../../lib/language';
 import { DEMO_SCENARIO_IDS, type DemoScenarioId } from './fixtures';
 
 /**
- * Nothing picked yet: three big sticker buttons (tangerine number tab + title + one-line sub).
- * A scenario is open: a compact row of sky chips so the walkthrough stays above the fold.
+ * Nothing picked yet: three big white sticker buttons (black number tab + title + one-line sub).
+ * A scenario is open: a compact row of chips (selected = lime fill + check, like every chip) so the
+ * walkthrough stays above the fold. /demo is neutral white + black: no reserved colour (tangerine
+ * = promo, sky = online) is used for "this is the demo".
  */
 export function ScenarioPicker({
   current,
@@ -35,7 +37,7 @@ export function ScenarioPicker({
   }
 
   return (
-    <SectionBlock tone="tangerine" id="demo-pick" title={t.demo.pickTitle} sub={t.demo.pickSub}>
+    <SectionBlock tone="white" id="demo-pick" title={t.demo.pickTitle} sub={t.demo.pickSub}>
       <ul className="flex flex-col gap-4">
         {DEMO_SCENARIO_IDS.map((id, i) => (
           <li key={id}>
@@ -47,7 +49,7 @@ export function ScenarioPicker({
             >
               <span
                 aria-hidden="true"
-                className="flex items-center justify-center border-r-2 border-ink bg-tangerine text-[22px] font-extrabold tabular-nums"
+                className="flex items-center justify-center border-r-2 border-ink bg-ink text-[22px] text-receipt font-extrabold tabular-nums"
               >
                 {i + 1}
               </span>
@@ -63,7 +65,10 @@ export function ScenarioPicker({
   );
 }
 
-/** Step progress: current step is lime + bold + aria-current; finished steps carry a check icon and "Done". */
+/**
+ * Step progress, sticker style: every pill has a 2px black border and black text. Current = lime fill
+ * + bold + aria-current; others are white. Finished steps carry a check icon and "Done" (sr-only).
+ */
 export function StepIndicator({
   step,
   labels,
@@ -81,15 +86,11 @@ export function StepIndicator({
           <li
             key={label}
             aria-current={state === 'current' ? 'step' : undefined}
-            className={`flex min-h-12 items-center gap-2 rounded-md border-2 px-2 text-[13px] leading-tight ${
-              state === 'current'
-                ? 'border-ink bg-lime font-extrabold'
-                : state === 'done'
-                  ? 'border-ink bg-receipt font-semibold'
-                  : 'border-muted font-semibold text-muted'
+            className={`flex min-h-12 items-center gap-2 rounded-md border-2 border-ink px-2 text-[13px] leading-tight text-ink ${
+              state === 'current' ? 'bg-lime font-extrabold' : 'bg-receipt font-semibold'
             }`}
           >
-            <span className="flex size-6 shrink-0 items-center justify-center rounded-full border-2 border-current text-[13px] font-extrabold tabular-nums">
+            <span className="flex size-6 shrink-0 items-center justify-center rounded-full border-2 border-ink text-[13px] font-extrabold tabular-nums">
               {state === 'done' ? <CheckIcon className="size-3.5" /> : n}
             </span>
             <span>

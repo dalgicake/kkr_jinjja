@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react';
 import { AboutPage } from './features/about/AboutPage';
+import { AccountPage } from './features/account/AccountPage';
 import { AdminPage } from './features/admin/AdminPage';
 import { ConfirmPage } from './features/confirm/ConfirmPage';
 import { DemoPage } from './features/demo/DemoPage';
@@ -23,5 +24,6 @@ export const ROUTES: readonly { path: string; element: ReactElement }[] = [
   { path: 'admin', element: <AdminPage /> }, // S7
   { path: 'stats', element: <StatsPage /> }, // S8
   { path: 'about', element: <AboutPage /> }, // S9
+  { path: 'account', element: <AccountPage /> }, // S10
   { path: 'screens', element: <ScreensPage /> }, // screen tour
 ];

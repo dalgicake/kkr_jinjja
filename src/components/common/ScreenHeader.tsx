@@ -8,7 +8,7 @@ import { TONE_BG, type Tone } from './tone';
  * Top of every screen: a full-bleed colour block with an optional back link, the ko/en toggle,
  * a Pretendard 800 title and an optional sub line. Use exactly once per screen, first in the page.
  *   tone      block fill (tone.ts meanings): home lime, confirm butter, about sky, history lilac,
- *             result white/lime, demo tangerine … pick the one that matches the screen's subject
+ *             result white/lime, demo white … pick the one that matches the screen's subject
  *   title     h1 text
  *   sub       optional line under the title
  *   back      { to, label? } shows a 48px back link (label defaults to t.ui.back); omit on home

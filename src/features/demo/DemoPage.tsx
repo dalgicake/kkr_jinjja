@@ -45,7 +45,7 @@ export function DemoPage() {
   return (
     <section className="flex flex-col gap-6 pb-8">
       <ScreenHeader
-        tone="tangerine"
+        tone="white"
         title={t.demo.title}
         sub={t.demo.intro}
         back={{ to: '/', label: t.ui.home }}

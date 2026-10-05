@@ -20,6 +20,7 @@ export const koScreens = {
     },
     history: { name: '기록', desc: '온라인 구매 예정과 확인된 구매.' },
     about: { name: '안내', desc: '일곱 가지 약속, 개인정보, 데이터 출처.' },
+    account: { name: '내 계정', desc: '선택 로그인, 닉네임, 언어, 로그아웃, 계정 삭제.' },
     demo: { name: '데모 고르기', desc: '녹화된 예시 세 가지 중 하나를 골라요.' },
     demoTag: { name: '데모 1단계: 가격표', desc: '찍은 가격표가 이렇게 보여요.' },
     demoConfirm: { name: '데모 2단계: 확인 카드', desc: '읽은 값과 확인이 필요한 칸 하나.' },

@@ -32,7 +32,8 @@ const item = (t: Copy, key: ItemKey, to: string, screen: number, tone: Tone): To
 
 /**
  * Every route in the app, grouped. Tones follow the fixed meanings (tone.ts) and match each
- * screen's own header colour, so a row looks like the screen it opens.
+ * screen's own header colour, so a row looks like the screen it opens. /demo is neutral white
+ * (never tangerine = promo or sky = online); the 1+1 example row is tangerine because it is a deal.
  */
 export function tourGroups(t: Copy): readonly TourGroup[] {
   return [
@@ -45,6 +46,7 @@ export function tourGroups(t: Copy): readonly TourGroup[] {
         item(t, 'confirm', '/confirm', 2, 'butter'),
         item(t, 'history', '/history', 4, 'lilac'),
         item(t, 'about', '/about', 9, 'sky'),
+        item(t, 'account', '/account', 10, 'lilac'),
       ],
     },
     {
@@ -55,20 +57,21 @@ export function tourGroups(t: Copy): readonly TourGroup[] {
       stops: RESULT_FIXTURES.map((f) => ({
         to: `/preview/result/${f.id}`,
         screen: 3,
-        tone: headerTone(f.verdict),
+        // a deal example reads as a deal: tangerine = promo (its banner on the result screen)
+        tone: f.promo.type === 'none' ? headerTone(f.verdict) : 'tangerine',
         name: t.result.preview.names[f.nameKey],
         desc: t.screens.verdicts[f.nameKey],
       })),
     },
     {
       id: 'demo',
-      tone: 'tangerine',
+      tone: 'white',
       title: t.screens.groups.demo,
       stops: [
-        item(t, 'demo', '/demo', 5, 'tangerine'),
+        item(t, 'demo', '/demo', 5, 'white'),
         item(t, 'demoTag', '/demo?s=D1&step=1', 5, 'butter'),
         item(t, 'demoConfirm', '/demo?s=D2&step=2', 5, 'butter'),
-        item(t, 'demoResult', '/demo?s=D3&step=3', 5, 'sky'),
+        item(t, 'demoResult', '/demo?s=D3&step=3', 5, 'lime'),
       ],
     },
     {

@@ -54,11 +54,12 @@ function ResultScreen({ fixture: f }: { fixture: ResultFixture }) {
   const v = activeVerdict(f, promoOn);
   const deal = promoCount(f);
   const last = lastPurchaseLine(t, won, f);
+  const tone = headerTone(v);
 
   return (
     <div className="flex flex-col" data-verdict={v.type}>
       <ScreenHeader
-        tone={headerTone(v)}
+        tone={tone}
         title={verdictTitle(t, won, v)}
         sub={verdictSub(t, won, v)}
         back={demo !== null ? { to: demoBack } : { to: '/', label: t.ui.home }}
@@ -74,6 +75,15 @@ function ResultScreen({ fixture: f }: { fixture: ResultFixture }) {
           </span>
         )}
       </ScreenHeader>
+      {/* pink header (needs your input) right on top of the pink example label would read as one
+          block: a white strip between them keeps the label standing on its own */}
+      {tone === 'pink' && (
+        <div
+          aria-hidden="true"
+          data-testid="label-gap"
+          className="-mx-4 h-4 border-b-2 border-ink bg-receipt"
+        />
+      )}
       <ExampleLabel />
 
       <div className="flex flex-col gap-6 pt-5">

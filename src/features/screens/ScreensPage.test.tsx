@@ -52,6 +52,18 @@ describe('/screens tour', () => {
       for (const w of banned.words) expect(html).not.toContain(w.toLowerCase());
   });
 
+  it('colours follow fixed meanings: 1+1 row is tangerine (promo), demo rows never tangerine/sky', () => {
+    const groups = tourGroups(en);
+    const results = groups.find((g) => g.id === 'results');
+    const promo = results?.stops.find((s) => s.to === '/preview/result/promo-1plus1');
+    expect(promo?.tone).toBe('tangerine');
+    for (const s of results?.stops ?? [])
+      if (s !== promo) expect(s.tone).not.toBe('tangerine');
+    const demo = groups.find((g) => g.id === 'demo');
+    expect(demo?.tone).not.toMatch(/tangerine|sky/);
+    for (const s of demo?.stops ?? []) expect(s.tone).not.toMatch(/tangerine|sky/);
+  });
+
   it('is linked from home', () => {
     expect(render(<HomePage />)).toContain('href="/screens"');
   });

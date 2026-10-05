@@ -1,4 +1,5 @@
 import type { Copy } from './ko';
+import { enAccount } from './parts/account.en';
 import { enResult } from './parts/result.en';
 import { enScreens } from './parts/screens.en';
 import { enOps } from './parts/ops.en';
@@ -129,13 +130,12 @@ export const en: Copy = {
     },
     size: '{amount}{unit} × {count}',
     sizeCountOnly: '{count} pcs',
-    price: '₩{price}',
   },
   next: {
     title: 'Got it',
     body: "Online comparison isn't built yet, so no online prices were checked.",
     storeLine: 'Store: {store}',
-    priceLine: 'Store price: ₩{price}',
+    priceLine: 'Store price: {price}',
     noStore: 'No store chosen',
     edit: 'Edit again',
     home: 'Start over',
@@ -261,7 +261,7 @@ export const en: Copy = {
     privacyTitle: 'Privacy',
     privacy: {
       anonymous:
-        "We don't ask for your name or contact details. Only an anonymous ID per device is used.",
+        "You start with an anonymous ID; signing in is optional. If you don't sign in, we don't ask for your name or contact details.",
       photo: "Price tag photos aren't stored after they're read.",
       testMode:
         'Exception: in field-test mode, tag photos from participants who agreed are stored privately.',
@@ -292,4 +292,5 @@ export const en: Copy = {
     errorDetail: 'Error detail: {message}',
   },
   ops: enOps,
+  account: enAccount,
 };

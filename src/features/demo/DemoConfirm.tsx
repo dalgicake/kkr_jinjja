@@ -7,7 +7,7 @@ const OK: FieldStatus = { check: false };
 
 /**
  * S2 confirm card, filled from the fixture and read-only. One field carries the low-confidence
- * marker (pink border + "Please check" badge, never colour alone). Butter band = the confirm screen.
+ * marker (black-bordered input + pink-fill "Please check" badge, never colour alone). Butter band = the confirm screen.
  */
 export function DemoConfirm({ scenario }: { scenario: DemoScenario }) {
   const { t } = useCopy();

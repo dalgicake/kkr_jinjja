@@ -5,7 +5,7 @@ import { useCopy } from '../../lib/language';
 import type { FieldError } from './confirmForm';
 
 export interface FieldStatus {
-  /** low confidence or unit-price mismatch → pink border + "확인해 주세요" */
+  /** low confidence or unit-price mismatch → pink-fill "Please check" badge next to the label */
   check: boolean;
   error?: FieldError;
 }
@@ -21,14 +21,14 @@ export function fieldIds(id: string, s: FieldStatus) {
   } as const;
 }
 
-/** Inputs: 48px tall, black text on white; status shown by border AND words. */
+/**
+ * Inputs: 48px tall, black text on white, always a 2px black border. "Please check" is never an
+ * outline colour — it is the pink-FILL badge next to the label (pink is a fill only, PLAN 13);
+ * an error adds an icon + words under the field.
+ */
 export function inputClass(s: FieldStatus): string {
-  const border = s.error
-    ? 'border-2 border-ink'
-    : s.check
-      ? 'border-2 border-pink'
-      : 'border-2 border-ink';
-  return `min-h-12 w-full rounded-md bg-receipt px-3 text-[17px] text-ink placeholder:text-muted ${border}`;
+  const weight = s.check || s.error ? ' font-semibold' : '';
+  return `min-h-12 w-full rounded-md border-2 border-ink bg-receipt px-3 text-[17px] text-ink placeholder:text-muted${weight}`;
 }
 
 export function ConfirmField({

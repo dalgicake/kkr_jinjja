@@ -1,3 +1,4 @@
+import { koAccount } from './parts/account.ko';
 import { koResult } from './parts/result.ko';
 import { koScreens } from './parts/screens.ko';
 import { koOps } from './parts/ops.ko';
@@ -126,13 +127,12 @@ export const ko = {
     },
     size: '{amount}{unit} {count}개',
     sizeCountOnly: '{count}개',
-    price: '{price}원',
   },
   next: {
     title: '확인했어요',
     body: '온라인 가격 비교는 다음 단계에서 만들고 있어요. 아직 온라인 가격을 조회하지 않았어요.',
     storeLine: '매장: {store}',
-    priceLine: '매장가: {price}원',
+    priceLine: '매장가: {price}',
     noStore: '매장 미선택',
     edit: '다시 고치기',
     home: '처음으로',
@@ -255,7 +255,8 @@ export const ko = {
     },
     privacyTitle: '개인정보',
     privacy: {
-      anonymous: '이름이나 연락처를 받지 않아요. 기기마다 만들어지는 익명 ID만 써요.',
+      anonymous:
+        '익명 ID로 시작해요. 로그인은 선택이고, 로그인하지 않으면 이름이나 연락처를 받지 않아요.',
       photo: '가격표 사진은 읽은 뒤 저장하지 않아요.',
       testMode: '예외: 현장 실험 모드에서 동의한 참가자의 가격표 사진만 비공개로 저장해요.',
       purchases: '구매 기록은 사용자가 직접 확인한 것만 남아요.',
@@ -284,6 +285,7 @@ export const ko = {
     errorDetail: '오류 내용: {message}',
   },
   ops: koOps,
+  account: koAccount,
 } as const;
 
 type Widen<T> = { [K in keyof T]: T[K] extends string ? string : Widen<T[K]> };

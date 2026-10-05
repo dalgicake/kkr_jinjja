@@ -4,7 +4,7 @@ import { Chip } from '../../components/common/Chip';
 import { useCopy } from '../../lib/language';
 
 /**
- * Per online item (S3 item 6): [View on seller] and a small "Same item? Yes / No".
+ * Per online item (S3 item 6): [Open seller page] and a small "Same item? Yes / No".
  *   emphasise  false → the seller link is a plain text link (P3: store wins, don't push online)
  *   onAction   not wired yet: the page shows "Not connected yet"
  */
@@ -33,7 +33,7 @@ export function ItemActions({ emphasise, onAction }: { emphasise: boolean; onAct
         <Chip tone="lime" selected={answer === 'yes'} onClick={() => pick('yes')}>
           {t.result.link.yes}
         </Chip>
-        <Chip tone="pink" selected={answer === 'no'} onClick={() => pick('no')}>
+        <Chip tone="lime" selected={answer === 'no'} onClick={() => pick('no')}>
           {t.result.link.no}
         </Chip>
       </div>

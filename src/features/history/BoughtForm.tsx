@@ -52,8 +52,8 @@ export function BoughtForm({ onSave }: { onSave: (pricePaid: number | null) => v
           setRaw(e.currentTarget.value);
           setInvalid(false);
         }}
-        className={`price min-h-12 w-full rounded-md border-2 bg-receipt px-3 text-[17px] text-ink tabular-nums ${
-          invalid ? 'border-pink' : 'border-ink'
+        className={`price min-h-12 w-full rounded-md border-2 border-ink bg-receipt px-3 text-[17px] text-ink tabular-nums ${
+          invalid ? 'font-semibold' : ''
         }`}
       />
       <p id={`${id}-hint`} className="text-[13px] text-muted">

@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router';
 import { VerifiedBadge } from '../../components/common/Badges';
 import { Button } from '../../components/common/Button';
 import { storeDisplayName } from '../../components/common/StoreChips';
-import { formatWon } from '../../../shared/units.js';
 import { fill } from '../../lib/i18n';
 import { useCopy } from '../../lib/language';
 import { scanStore, type ConfirmedScan } from '../capture/scanSession';
@@ -14,7 +13,7 @@ import { productLabel } from './labels';
  */
 export function ConfirmedPlaceholder({ confirmed }: { confirmed: ConfirmedScan }) {
   const navigate = useNavigate();
-  const { t } = useCopy();
+  const { t, won } = useCopy();
   const store = storeDisplayName(t, confirmed.storeName);
   return (
     <section className="flex flex-col gap-4" aria-live="polite">
@@ -26,7 +25,7 @@ export function ConfirmedPlaceholder({ confirmed }: { confirmed: ConfirmedScan }
         )}
         <p className="font-semibold">{productLabel(t, confirmed.target)}</p>
         <p className="tabular-nums">
-          {fill(t.next.priceLine, { price: formatWon(confirmed.storePrice) })}
+          {fill(t.next.priceLine, { price: won(confirmed.storePrice) })}
         </p>
         <p>{fill(t.next.storeLine, { store: store ?? t.next.noStore })}</p>
       </div>

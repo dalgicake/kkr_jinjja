@@ -9,7 +9,7 @@ export function toggleMode(current: readonly Mode[], mode: Mode): Mode[] {
   return next.length ? next : [...current];
 }
 
-/** Period (pick one, lime) and mode (pick any, sky) filter chips, one block above the metrics. */
+/** Period (pick one) and mode (pick any) filter chips — selected = lime fill + check, like every chip, one block above the metrics. */
 export function StatsFilters({
   period,
   modes,

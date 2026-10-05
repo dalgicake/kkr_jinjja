@@ -84,6 +84,33 @@ describe('/demo screen', () => {
     expect(html).toContain('href="/preview/result/BUNDLE_ONLY?demo=D3"');
     expect(html).toContain(esc(en.demo.verdicts.BUNDLE_ONLY));
   });
+  it('uses no reserved colour for "demo": no tangerine (promo) anywhere, sky only on online verdicts', () => {
+    for (const url of ['/demo', '/demo?s=D1&step=1', '/demo?s=D2&step=2', '/demo?s=D1&step=3'])
+      expect(render(url)).not.toMatch(/bg-tangerine|bg-sky/);
+  });
+  it('stepper pills: 2px black border on every pill, current lime, others white', () => {
+    const html = render('/demo?s=D2&step=2');
+    const pills = html.match(/<li[^>]*class="[^"]*min-h-12[^"]*rounded-md[^"]*"/g) ?? [];
+    expect(pills).toHaveLength(3);
+    for (const p of pills) expect(p).toContain('border-ink');
+    expect(pills.filter((p) => p.includes('bg-lime'))).toHaveLength(1);
+    expect(pills.filter((p) => p.includes('bg-receipt'))).toHaveLength(2);
+    expect(html).not.toMatch(/border-muted/);
+  });
+  it('the uncertain field keeps a black border; pink appears only as the badge fill', () => {
+    const html = render('/demo?s=D2&step=2');
+    expect(html).not.toMatch(/border-pink|text-pink/);
+    expect(html).toMatch(/id="demo-[A-Za-z]+-check"[^>]*bg-pink/);
+  });
+  it('selected scenario chip is lime with a check, others white', () => {
+    const all = render('/demo?s=D2&step=1');
+    const html = all.slice(all.indexOf('demo-switch-title'), all.indexOf('</nav>'));
+    const chips = html.match(/<button[^>]*aria-pressed="(true|false)"[^>]*>/g) ?? [];
+    expect(chips).toHaveLength(3);
+    const on = chips.filter((c) => c.includes('aria-pressed="true"'));
+    expect(on).toHaveLength(1);
+    expect(on[0]).toContain('bg-lime');
+  });
   it('never uses banned P4 words in either language', () => {
     for (const lang of ['en', 'ko'] as const) {
       for (const url of ['/demo', '/demo?s=D1&step=1', '/demo?s=D2&step=2', '/demo?s=D3&step=3']) {

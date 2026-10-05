@@ -44,3 +44,14 @@ export function fill(template: string, vars: Record<string, string | number>): s
     key in vars ? String(vars[key]) : match,
   );
 }
+
+/**
+ * Split a template around its first `{name}` placeholder → [before, after], so the caller can
+ * render the value in its own element (e.g. an email that may wrap anywhere). If the
+ * placeholder is missing, `before` is the whole template and `after` is ''.
+ */
+export function splitAt(template: string, name: string): [string, string] {
+  const token = `{${name}}`;
+  const i = template.indexOf(token);
+  return i < 0 ? [template, ''] : [template.slice(0, i), template.slice(i + token.length)];
+}

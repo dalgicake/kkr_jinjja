@@ -1,9 +1,11 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import { devApi } from './scripts/dev-api/plugin.js';
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  // devApi: `vite dev` only — runs api/*.ts for /api/* locally (never in the build).
+  plugins: [react(), tailwindcss(), devApi()],
   test: {
     environment: 'node',
     include: ['shared/**/*.test.ts', 'src/**/*.test.{ts,tsx}', 'tests/**/*.test.ts'],

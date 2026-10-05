@@ -1,5 +1,4 @@
 import type { TargetSpec } from '../../../shared/types.js';
-import { formatWon } from '../../../shared/units.js';
 import type { Copy } from '../../copy/ko';
 import { fill } from '../../lib/i18n';
 import type { ReadFailure } from '../capture/readTagClient';
@@ -25,10 +24,6 @@ export function productLabel(
   const words = [p.brand, p.productName];
   if (p.variant && !p.productName.includes(p.variant)) words.push(p.variant);
   return `${words.join(' ')} ${sizeLabel(t, p)}`;
-}
-
-export function priceLabel(t: Copy, won: number): string {
-  return fill(t.confirm.price, { price: formatWon(won) });
 }
 
 export function failureMessage(t: Copy, reason: ReadFailure): string {

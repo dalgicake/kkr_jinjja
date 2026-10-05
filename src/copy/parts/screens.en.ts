@@ -22,6 +22,10 @@ export const enScreens: Copy['screens'] = {
     },
     history: { name: 'Records', desc: 'Planned online buys and confirmed purchases.' },
     about: { name: 'About', desc: 'The seven promises, privacy and data source.' },
+    account: {
+      name: 'My account',
+      desc: 'Optional sign-in, nickname, language, sign out and delete account.',
+    },
     demo: { name: 'Demo picker', desc: 'Pick one of three recorded examples.' },
     demoTag: { name: 'Demo step 1: price tag', desc: 'How a photographed tag looks.' },
     demoConfirm: {

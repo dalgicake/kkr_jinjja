@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { ko } from './ko';
 import { en } from './en';
-import { fill } from '../lib/i18n';
+import { fill, splitAt } from '../lib/i18n';
 
 function keyPaths(obj: object, prefix = ''): string[] {
   return Object.entries(obj).flatMap(([k, v]) =>
@@ -23,6 +23,12 @@ describe('copy', () => {
       }
     }
   });
+  it('splitAt splits around one placeholder', () => {
+    expect(splitAt('Signed in as {email}.', 'email')).toEqual(['Signed in as ', '.']);
+    expect(splitAt('{email} 계정', 'email')).toEqual(['', ' 계정']);
+    expect(splitAt('no token', 'email')).toEqual(['no token', '']);
+  });
+
   it('fill replaces placeholders', () => {
     expect(fill(ko.version, { version: '0.001' })).toBe('v0.001');
     expect(fill('{a} {b}', { a: 1 })).toBe('1 {b}');

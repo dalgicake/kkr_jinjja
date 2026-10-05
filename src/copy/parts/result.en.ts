@@ -83,7 +83,7 @@ export const enResult: Copy['result'] = {
     },
   },
   link: {
-    view: 'View on seller',
+    view: 'Open seller page',
     sameAsk: 'Same item?',
     yes: 'Yes',
     no: 'No',

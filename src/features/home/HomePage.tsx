@@ -48,11 +48,12 @@ export function HomePage() {
             {t.home.manualEntry}
           </Button>
         </div>
-        <ButtonLink to="/demo" tone="sky">
+        <ButtonLink to="/demo" tone="white">
           {t.home.demo}
         </ButtonLink>
         <div className="flex flex-wrap gap-x-6">
           <TextLink to="/about">{t.home.aboutLink}</TextLink>
+          <TextLink to="/account">{t.account.homeLink}</TextLink>
           <TextLink to="/screens">{t.screens.homeLink}</TextLink>
         </div>
       </SectionBlock>

@@ -86,14 +86,14 @@ describe('S2 confirm', () => {
     expect(html).toContain(ko.confirm.cta);
   });
 
-  it('low confidence → pink border AND the words, on the affected fields only', async () => {
+  it('low confidence → pink-fill badge AND the words, on the affected fields only', async () => {
     await scan({ ...base, confidence: { product: 0.95, size: 0.95, price: 0.5 } });
     const html = render(<ConfirmPage />);
     expect(count(html, ko.confirm.check)).toBe(1);
-    expect(html).toMatch(
-      /id="confirm-storePrice"[^>]*border-pink|border-pink[^>]*id="confirm-storePrice"/,
-    );
-    expect(html).toContain('confirm-storePrice-check');
+    // pink is a fill only: the input keeps its black border, the badge carries the pink
+    expect(html).not.toContain('border-pink');
+    expect(html).toMatch(/id="confirm-storePrice-check"[^>]*bg-pink/);
+    expect(html).toContain('aria-describedby="confirm-storePrice-check"');
   });
 
   it('printed unit price off by more than 5% → warning on size and count', async () => {
@@ -188,6 +188,9 @@ describe('S2 confirm', () => {
     const html = render(<ConfirmPage />);
     expect(html).toContain(ko.next.body);
     expect(html).toContain('9,980');
+    // price line goes through the shared won formatter (ko "9,980원"), no hand-written 원/₩ in copy
+    expect(html).toContain('9,980원');
+    expect(ko.next.priceLine).not.toMatch(/원|₩/);
     expect(html).toContain(ko.store.names.emart);
     // nothing that looks like a comparison result
     expect(html).not.toMatch(/싸요|비교 영수증/);
